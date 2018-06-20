@@ -1,0 +1,154 @@
+#include "PQ9_bus_engine.h"
+#include "subsystem.h"
+
+#define CRC_POLY 0x1021
+
+/**** CRC calculator ****/
+uint16_t crc_PQ9(uint16_t crc1, uint8_t data, uint16_t poly) {
+
+    for (unsigned char i = 0; i < 8; i++)
+    {
+      if (((( crc1 & 0x8000) >> 8) ^ (data & 0x80)) != 0)
+      {
+        crc1 <<= 1;
+        crc1 ^= poly;
+      }
+      else
+      {
+        crc1 <<= 1;
+      }
+      data <<= 1;
+    }
+    return crc1;
+}
+
+uint16_t calculate_crc_PQ9(uint8_t *buf, const uint16_t size) {
+
+  if(!C_ASSERT(buf != NULL) == true) {
+    return true;
+  }
+
+  if(!C_ASSERT(size != NULL) == true) {
+    return true;
+  }
+
+  uint16_t val = 0xFFFF;
+
+  for(uint16_t i = 0; i < size; i++) {
+    val = crc_PQ9(val, buf[i], 0x1021);
+  }
+
+  return val;
+}
+
+uint8_t get_subs_addr() {
+  return (uint8_t)SYSTEM_APP_ID;
+}
+
+static bool pq9_tx_flag = false;
+
+bool is_enabled_PQ9_tx() {
+  return pq9_tx_flag;
+}
+
+void disable_PQ9_tx() {
+  pq9_tx_flag = false;
+}
+
+void enable_PQ9_tx() {
+  pq9_tx_flag = true;
+  HAL_PQ9_BUS_enable_tx();
+}
+
+bool unpack_PQ9_BUS(const uint8_t *buf,
+                    const uint16_t size,
+                    pq9_pkt *pq_pkt) {
+
+  pq_pkt->dest_id = buf[0];
+  pq_pkt->size = buf[1];
+  pq_pkt->src_id = buf[2];
+  pq_pkt->type = buf[3];
+  pq_pkt->subtype = buf[4];
+
+  if(pq_pkt->size != size - 5) {
+    return true;
+  }
+
+  if(pq_pkt->dest_id != SYSTEM_APP_ID) {
+    return true;
+  }
+
+  uint16_t crc_calc = calculate_crc_PQ9(buf, size - 2);
+  uint16_t crc_pkt = 0;
+
+  cnv8_16LE(&buf[size-2], &crc_pkt);
+
+  if(crc_calc != crc_pkt) {
+    return true;
+  }
+
+  pq_pkt->size -= 2; //type and subtype
+  memcpy(pq_pkt->msg, &buf[5], pq_pkt->size);
+
+ #if(SYSTEM_APP_ID != PQ9_MASTER_APP_ID)
+   enable_PQ9_tx();
+ #endif
+
+  return false;
+}
+
+bool pack_PQ9_BUS(pq9_pkt *pq_pkt, uint8_t *buf, uint16_t *size) {
+
+  if(!C_ASSERT(pq_pkt != NULL) == true) {
+    return true;
+  }
+
+  if(!C_ASSERT(buf != NULL) == true) {
+    return true;
+  }
+
+  if(!C_ASSERT(size != NULL) == true) {
+    return true;
+  }
+
+#if(SYSTEM_APP_ID == PQ9_MASTER_APP_ID)
+  if(pq_pkt->dest_id == PQ9_MASTER_APP_ID) {
+    return true;
+  }
+#else
+  if(pq_pkt->dest_id != PQ9_MASTER_APP_ID) {
+    return true;
+  }
+#endif
+
+  pq_pkt->src_id = SYSTEM_APP_ID;
+
+  if(!C_ASSERT(pq_pkt->src_id != pq_pkt->dest_id) == true) {
+    return true;
+  }
+
+  *size = pq_pkt->size + 5;
+
+  buf[0] = pq_pkt->dest_id;
+  buf[1] = pq_pkt->size;
+  buf[2] = pq_pkt->src_id;
+  buf[3] = pq_pkt->type;
+  buf[4] = pq_pkt->subtype;
+
+  memcpy(&buf[5], pq_pkt->msg, pq_pkt->size-2);
+
+  uint16_t crc = calculate_crc_PQ9(buf, *size-2);
+  cnv16_8(crc, &buf[*size-2]);
+
+  return false;
+}
+
+crt_pkt(pq9_pkt *pq_pkt, SBSYS_id id, uint8_t type, uint8_t subtype, uint8_t size) {
+
+  pq_pkt->dest_id = id;
+  pq_pkt->size = size + 2; //type and subtype
+  pq_pkt->src_id = SYSTEM_APP_ID;
+  pq_pkt->type = type;
+  pq_pkt->subtype = subtype;
+
+}
