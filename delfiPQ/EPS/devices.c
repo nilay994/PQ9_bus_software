@@ -55,21 +55,13 @@ void device_init() {
 
 
   ltc_dev.id = BATT_CHARGE_DEV_ID;
-  ltc_dev.R_sense = 0;
-  ltc_dev.M = 0;
-  ltc_dev.Q = 750;
-  ltc_dev.R = 33;
-  ltc_dev.I = 1500;
-  ltc_init(ltc_dev.id,
-           &(ltc_dev.R_sense),
-           &(ltc_dev.M),
-           ltc_dev.Q,
-           ltc_dev.R,
-           ltc_dev.I);
+  ltc_init(BATT_CHARGE_DEV_ID);
 
   usleep(10);
 
   FRAM_init(EPS_FRAM_DEV_ID);
+
+  usleep(10);
 
 }
 
@@ -112,8 +104,10 @@ void update_device(dev_id id) {
 
   }  else if(id == BATT_CHARGE_DEV_ID) {
 
-    //ltc_code_to_voltage(id, uint16_t *voltage);
-    ltc_temp(id, &ltc_dev.temp);
+    ltc_code_to_voltage(id, &ltc_dev.raw_volt);
+    ltc_temp(id, &ltc_dev.raw_temp);
+    ltc_capacity(id, &ltc_dev.raw_cap);
+
   }
 
 }
@@ -154,7 +148,9 @@ void read_device_parameters(dev_id id, void * data) {
 
   }  else if(id == BATT_CHARGE_DEV_ID) {
 
-     ((struct ltc_device*)data)->temp = ltc_dev.temp;
+    ((struct ltc_device*)data)->raw_temp = ltc_dev.raw_temp;
+    ((struct ltc_device*)data)->raw_cap = ltc_dev.raw_cap;
+    ((struct ltc_device*)data)->raw_volt = ltc_dev.raw_volt;
 
   }  else if(id == EPS_FRAM_DEV_ID) {
 
@@ -196,8 +192,6 @@ void write_device_parameters(dev_id id, void * data) {
         //            tmp_dev[temp_id].resolution);
 
   }  else if(id == BATT_CHARGE_DEV_ID) {
-
-    //ltc_code_to_voltage(id, uint16_t *voltage);
 
   }  else if(id == EPS_FRAM_DEV_ID) {
 

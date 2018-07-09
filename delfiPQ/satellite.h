@@ -20,12 +20,18 @@
 
 #define TC_FM_TYPE    1
 #define TC_HK_TYPE    3
+#define TC_VER_TYPE   4
 #define TC_PING_TYPE 17
 
-#define TC_FM_SET_PARAMETER_SUBTYPE  1
+#define TC_FM_SET_PARAMETER_SUBTYPE   1
+#define TC_FM_GET_PARAMETER_SUBTYPE   2
+#define TM_FM_PARAMETER_RESP_SUBTYPE  2
 
 #define TC_HK_REQ_SUBTYPE  1
 #define TM_HK_RESP_SUBTYPE 2
+
+#define TM_ACK_OK_SUBTYPE    1
+#define TM_ACK_ERROR_SUBTYPE 2
 
 #define TC_PING_REQ_SUBTYPE  1
 #define TM_PING_RESP_SUBTYPE 2
@@ -88,13 +94,64 @@ typedef enum {
 }dev_id;
 
 typedef enum {
-    EPS_INA_OBC_CUR_PAR_ID             =  0,
-    EPS_INA_OBC_CUR_ARR_PAR_ID         =  1,
-    EPS_INA_OBC_VLT_PAR_ID             =  2,
-    EPS_INA_OBC_CUR_MON_HL_PAR_ID      =  3,
-    EPS_INA_OBC_CUR_MON_LL_PAR_ID      =  4,
-    LAST_PAR_ID                        =  5
-}par_id;
+    /* EPS */
+    bus1_current_threshold_param_id    =  0,
+    bus2_current_threshold_param_id    =  1,
+    bus3_current_threshold_param_id    =  2,
+    bus4_current_threshold_param_id    =  3,
+
+    EPS_boot_counter_param_id          =  4,
+
+    bus1_power_switch_param_id         =  5,
+    bus2_power_switch_param_id         =  6,
+    bus3_power_switch_param_id         =  7,
+    bus4_power_switch_param_id         =  8,
+    bus_power_switches_param_id        =  9,
+
+    testing_2_param_id                 =  10,
+    testing_4_param_id                 =  11,
+
+    bus1_current_param_id              =  12,
+    bus2_current_param_id              =  13,
+    bus3_current_param_id              =  14,
+    bus4_current_param_id              =  15,
+
+    bus1_voltage_param_id              =  16,
+    bus2_voltage_param_id              =  17,
+    bus3_voltage_param_id              =  18,
+    bus4_voltage_param_id              =  19,
+
+    sol1_current_param_id              =  20,
+    sol2_current_param_id              =  21,
+    sol3_current_param_id              =  22,
+    sol4_current_param_id              =  23,
+
+    sol1_voltage_param_id              =  24,
+    sol2_voltage_param_id              =  25,
+    sol3_voltage_param_id              =  26,
+    sol4_voltage_param_id              =  27,
+
+    sol1_temp_param_id                 =  28,
+    sol2_temp_param_id                 =  29,
+    sol3_temp_param_id                 =  30,
+    sol4_temp_param_id                 =  31,
+
+    batt_voltage_param_id              =  32,
+    batt_temp_param_id                 =  33,
+    batt_capacity_param_id             =  34,
+
+    internal_current_param_id          =  35,
+    internal_voltage_param_id          =  36,
+
+    unregulated_current_param_id       =  37,
+    unregulated_voltage_param_id       =  38,
+
+    eps_uptime_param_id                =  39,
+
+    eps_sensor_status_param_id         =  40,
+
+    LAST_param_id                      =  41
+}param_id;
 
 typedef enum {
     TEST_VAULT_ID           =  0,

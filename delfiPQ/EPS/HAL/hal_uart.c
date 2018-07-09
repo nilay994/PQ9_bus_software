@@ -91,10 +91,7 @@ void HAL_PQ9_BUS_disable_tx(Timer_Handle myHandle) {
 }
 
 void temp(UART_Handle handle, void *buf, size_t count) {
-    UARTMSP432_Object *object = handle->object;
-    int i = 0;
-    i++;
-    i = object->readCount;
+
 }
 
 void HAL_peripheral_open() {
@@ -112,9 +109,12 @@ void HAL_peripheral_open() {
   uartParams.readDataMode = UART_DATA_BINARY;
   uartParams.readReturnMode = UART_RETURN_FULL;
   uartParams.readEcho = UART_ECHO_OFF;
-  uartParams.baudRate = 9600;
+  uartParams.baudRate = 500000;
   uartParams.readCallback = &temp;
   uart_pq9_bus = UART_open(PQ9, &uartParams);
+
+  UARTMSP432_HWAttrsV1 const *hwAttrs = uart_pq9_bus->hwAttrs;
+  UART_setDormant(hwAttrs->baseAddr);
 
   UART_Params_init(&uartParams);
   uartParams.writeMode = UART_MODE_BLOCKING;
@@ -235,37 +235,23 @@ SAT_returnState HAL_I2C_readWrite(dev_id id,
   return SATR_OK;
 }
 
+
+extern uint8_t pq_rx_buf[300];
+extern uint16_t pq_rx_count, pq_size;
+extern bool pq_rx_flag;
+
 SAT_returnState HAL_uart_rx(dev_id id, uint8_t *buf, uint16_t *size) {
 
-    UARTMSP432_Object *object = uart_pq9_bus->object;
+  if(pq_rx_flag) {
 
-    if(!C_ASSERT(buf != 0) == true) {
-      return SATR_ERROR;
-    }
-    if(!C_ASSERT(object->readCount < UART_BUF_SIZE) == true) {
-      return SATR_ERROR;
-    }
+    pq_rx_flag = 0;
 
+    memcpy(buf, pq_rx_buf, pq_rx_count);
+    *size = pq_rx_count;
+    return SATR_EOT;
+  }
 
-    if(object->readCount > 0) {
-        uint8_t readIn = 0;
-
-        for(uint16_t i = 0; i < object->readCount; i++) {
-          uint16_t res = RingBuf_get(&object->ringBuffer, &readIn);
-
-          if(!C_ASSERT(res >= 0) == true) {
-            return SATR_ERROR;
-          }
-
-          buf[i] = readIn;
-        }
-
-        *size = (uint16_t)(object->readCount);
-        object->readCount = 0;
-
-        return SATR_EOT;
-    }
-    return SATR_OK;
+  return SATR_OK;
 }
 
 void HAL_uart_tx(dev_id id, uint8_t *buf, uint16_t size) {
@@ -273,11 +259,8 @@ void HAL_uart_tx(dev_id id, uint8_t *buf, uint16_t size) {
   if(!C_ASSERT(buf != NULL) == true) {
     return ;
   }
-  if(!C_ASSERT(size < MAX_HLDLC_PKT_SIZE) == true) {
-    return ;
-  }
 
-  UART_write(uart_pq9_bus, buf, size);
+  UART_writePolling(uart_pq9_bus, buf, size);
   disable_PQ9_tx();
   GPIO_write(PQ9_EN, 0);
 }

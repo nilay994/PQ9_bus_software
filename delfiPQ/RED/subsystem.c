@@ -1,7 +1,7 @@
 #include "subsystem.h"
 #include "ping_service.h"
 
-SAT_returnState route_pkt(pq9_pkt *pkt) {
+void route_pkt(pq9_pkt *pkt) {
 
   if(pkt->type == TC_PING_TYPE) {
     ping_app(pkt);

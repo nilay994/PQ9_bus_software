@@ -2,12 +2,18 @@
 #include "hal_uart.h"
 #include "subsystem.h"
 
-void fm_set_parameter(dev_id did, FM_fun_id fid) {
+bool fm_set_parameter(dev_id did, FM_fun_id fid, uint8_t *data) {
 
-    if(did == 1 && fid == 0) {
+    bool res = false;
+
+
+    if(did == 4 && fid == 0) {
       HAL_LED_ON();
-    } else if(did == 1 && fid == 1) {
+      res = true;
+    } else if(did == 4 && fid == 1) {
       HAL_LED_OFF();
+      res = true;
     }
 
+    return res;
 }

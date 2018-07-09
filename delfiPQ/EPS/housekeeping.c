@@ -4,43 +4,235 @@
 #include "osal.h"
 #include "packet_utilities.h"
 
+void populate_housekeeping(uint8_t *buf, uint8_t *pkt_size) {
 
-SAT_returnState hk_parameters_report(SBSYS_id app_id, HK_struct_id sid, uint8_t *data, uint8_t len) {
-   return SATR_ERROR;
-}
+  uint16_t size = 0;
+  uint16_t param_size = 0;
 
-SAT_returnState hk_report_parameters(HK_struct_id sid, pq9_pkt *pkt) {
+  {
+    uint32_t var;
+    get_parameter(eps_uptime_param_id, &var, &param_size);
+    cnv32_8(var, &buf[size]);
+    size += param_size;
+  }
 
+  {
+    uint32_t var;
+    get_parameter(testing_4_param_id, &var, &param_size);
+    cnv32_8(var, &buf[size]);
+    size += param_size;
+  }
 
-    pkt->data[0] = (HK_struct_id)sid;
+  {
+    uint16_t var;
+    get_parameter(EPS_boot_counter_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
 
-    if(sid == HEALTH_REP) {
+  {
+    buf[size] = 0;
+    size += 1;
+  }
 
-        uint16_t size = 1;
+  {
+    uint16_t var;
+    get_parameter(eps_sensor_status_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
 
-        cnv32_8( OSAL_sys_GetTick(), &pkt->data[1]);
-        size += 4;
+  {
+    uint16_t var;
+    get_parameter(sol1_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(sol2_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(sol3_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(sol4_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
 
-        struct ina_device ina_dev;
+  {
+    uint16_t var;
+    get_parameter(sol1_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(sol2_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(sol3_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(sol4_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
 
-        //sol temp and inas
-        //ltc
+  {
+    uint16_t var;
+    get_parameter(sol1_temp_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(sol2_temp_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(sol3_temp_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(sol4_temp_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
 
-        //SOL_XM_MON_DEV_ID
-        for(uint8_t i=EPS_OBC_MON_DEV_ID; i <= EPS_UR_MON_DEV_ID; i++) {
+  {
+    uint16_t var;
+    get_parameter(bus1_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(bus2_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(bus3_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(bus4_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
 
-            read_device_parameters(i, &ina_dev);
+  {
+    uint16_t var;
+    get_parameter(bus1_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(bus2_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(bus3_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(bus4_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
 
-            cnv16_8(ina_dev.current_raw,&pkt->data[size]);
-            size += 2;
-            cnv16_8(ina_dev.voltage_raw,&pkt->data[size]);
-            size += 2;
-            cnv16_8(ina_dev.power_raw,&pkt->data[size]);
-            size += 2;
-        }
+  {
+    uint16_t var;
+    get_parameter(batt_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(batt_capacity_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(batt_temp_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
 
-        pkt->len = size;
-    }
+  {
+    uint8_t var;
+    get_parameter(bus_power_switches_param_id, &var, &param_size);
+    buf[size] = var;
+    size += param_size;
+  }
 
-    return SATR_OK;
+  {
+    buf[size] = 0;
+    size += 1;
+    buf[size] = 0;
+    size += 1;
+  }
+
+  {
+    uint16_t var;
+    get_parameter(internal_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(internal_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+
+  {
+    uint16_t var;
+    get_parameter(unregulated_current_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+  {
+    uint16_t var;
+    get_parameter(unregulated_voltage_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+
+  {
+    uint16_t var;
+    get_parameter(testing_2_param_id, &var, &param_size);
+    cnv16_8(var, &buf[size]);
+    size += param_size;
+  }
+
+  *pkt_size += size;
+
 }

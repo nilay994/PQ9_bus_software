@@ -26,12 +26,9 @@ struct tmp_device {
 
 struct ltc_device {
   dev_id id;
-  uint16_t R_sense;
-  uint8_t M;
-  uint16_t Q;
-  uint16_t R;
-  uint16_t I;
-  int16_t temp;
+  int16_t raw_temp;
+  uint16_t raw_cap;
+  uint16_t raw_volt;
 };
 
 struct fram_device {

@@ -3,37 +3,20 @@
 #include "hal_uart.h"
 #include "subsystem.h"
 
-/*Must use real pins*/
-SAT_returnState function_management_api(dev_id did, FM_fun_id fid) {
+bool fm_set_parameter(param_id pid, FM_fun_id fid, uint8_t *data) {
 
-    if(!C_ASSERT(did == OBC_DEV_ID ||
-                 did == ADCS_DEV_ID ||
-                 did == COMMS_DEV_ID ||
-                 did == ADB_DEV_ID) == true) {
-      return SATR_ERROR;
-    }
-    if(!C_ASSERT(fid == P_OFF || fid == P_ON) == true) {
-      return SATR_ERROR;
+    bool res = false;
+
+    if(fid == P_ON || pid == P_OFF) {
+      res = set_parameter(pid, fid);
+    } else if(pid == SET_VAL) {
+      res = set_parameter(pid, *data);
     }
 
-    if(did == OBC_DEV_ID && fid == P_ON) {
-      HAL_eps_v1_ON();
-    } else if(did == OBC_DEV_ID && fid == P_OFF) {
-      HAL_eps_v1_OFF();
-    } else if(did == ADCS_DEV_ID && fid == P_ON) {
-      HAL_eps_v2_ON();
-    } else if(did == ADCS_DEV_ID && fid == P_OFF) {
-      HAL_eps_v2_OFF();
-    } else if(did == COMMS_DEV_ID && fid == P_ON) {
-      HAL_eps_v3_ON();
-    } else if(did == COMMS_DEV_ID && fid == P_OFF) {
-      HAL_eps_v3_OFF();
-    } else if(did == ADB_DEV_ID && fid == P_ON) {
-      HAL_eps_v4_ON();
-    } else if(did == ADB_DEV_ID && fid == P_OFF) {
-      HAL_eps_v4_OFF();
-    }
+    return res;
+}
+
+void fm_get_parameter(param_id pid) {
 
 
-    return SATR_OK;
 }
