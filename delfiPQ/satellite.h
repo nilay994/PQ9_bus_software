@@ -150,7 +150,11 @@ typedef enum {
 
     eps_sensor_status_param_id         =  40,
 
-    LAST_param_id                      =  41
+    eps_mcu_temp_param_id              =  41,
+
+    eps_testing_4_rw_param_id          =  42,
+
+    LAST_param_id                      =  43
 }param_id;
 
 typedef enum {

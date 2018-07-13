@@ -40,7 +40,7 @@ void export_pkt() {
     SAT_returnState res = SATR_ERROR;
 
     if(!is_enabled_PQ9_tx()) {
-      return ;
+    //  return ;
     }
 
     if((pkt = queuePop(1)) ==  NULL) {

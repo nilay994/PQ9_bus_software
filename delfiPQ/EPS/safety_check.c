@@ -1,5 +1,6 @@
 #include "safety_check.h"
 #include "devices.h"
+#include "parameters.h"
 
 void bus_current_check(uint16_t c1, uint16_t c2, uint16_t c3, uint16_t c4) {
 
@@ -8,10 +9,13 @@ void bus_current_check(uint16_t c1, uint16_t c2, uint16_t c3, uint16_t c4) {
  uint16_t b3 = 0;
  uint16_t b4 = 0;
 
-  get_parameter(bus1_current_threshold_param_id, &b1);
-  get_parameter(bus2_current_threshold_param_id, &b2);
-  get_parameter(bus3_current_threshold_param_id, &b3);
-  get_parameter(bus4_current_threshold_param_id, &b4);
+ uint16_t size;
+ uint8_t buf[4];
+
+  get_parameter(bus1_current_threshold_param_id, &b1, buf, &size);
+  get_parameter(bus2_current_threshold_param_id, &b2, buf, &size);
+  get_parameter(bus3_current_threshold_param_id, &b3, buf, &size);
+  get_parameter(bus4_current_threshold_param_id, &b4, buf, &size);
 
   if(c1 > b1) {
     HAL_eps_v1_OFF();
