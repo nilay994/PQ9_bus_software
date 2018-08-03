@@ -3,7 +3,7 @@
 #include "devices.h"
 #include <stdint.h>
 
-#define OBC_BOOT_COUNTER_FRAM_ADDRESS 0x0010
+#define OBC_BOOT_COUNTER_FRAM_ADDRESS 0x0000
 
 struct parameters_memory_pool {
 
