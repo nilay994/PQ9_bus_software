@@ -18,27 +18,27 @@ void bus_current_check(uint16_t c1, uint16_t c2, uint16_t c3, uint16_t c4) {
   get_parameter(bus4_current_threshold_param_id, &b4, buf, &size);
 
   if(c1 > b1) {
-    HAL_eps_v1_OFF();
+    set_parameter(bus1_power_switch_state_param_id, false);
   } else {
-    HAL_eps_v1_ON();
+    set_parameter(bus1_power_switch_state_param_id, true);
   }
 
   if(c2 > b2) {
-    HAL_eps_v2_OFF();
+    set_parameter(bus2_power_switch_state_param_id, false);
   } else {
-    HAL_eps_v2_ON();
+    set_parameter(bus2_power_switch_state_param_id, true);
   }
 
   if(c3 > b3) {
-    HAL_eps_v3_OFF();
+    set_parameter(bus3_power_switch_state_param_id, false);
   } else {
-    HAL_eps_v3_ON();
+    set_parameter(bus3_power_switch_state_param_id, true);
   }
 
   if(c4 > b4) {
-    HAL_eps_v4_OFF();
+    set_parameter(bus4_power_switch_state_param_id, false);
   } else {
-    HAL_eps_v4_ON();
+    set_parameter(bus4_power_switch_state_param_id, true);
   }
 
 }
@@ -51,16 +51,16 @@ void eps_safety_check() {
   uint16_t c3;
   uint16_t c4;
 
-  read_device_parameters(EPS_SU_MON_DEV_ID, &ina_dev);
+  read_device_parameters(EPS_V1_MON_DEV_ID, &ina_dev);
   c1 = ina_dev.current_raw;
 
-  read_device_parameters(EPS_ADCS_MON_DEV_ID, &ina_dev);
+  read_device_parameters(EPS_V2_MON_DEV_ID, &ina_dev);
   c2 = ina_dev.current_raw;
 
-  read_device_parameters(EPS_OBC_MON_DEV_ID, &ina_dev);
+  read_device_parameters(EPS_V3_MON_DEV_ID, &ina_dev);
   c3 = ina_dev.current_raw;
 
-  read_device_parameters(EPS_COMMS_MON_DEV_ID, &ina_dev);
+  read_device_parameters(EPS_V4_MON_DEV_ID, &ina_dev);
   c4 = ina_dev.current_raw;
 
   bus_current_check(c1, c2, c3, c4);
