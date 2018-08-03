@@ -1,5 +1,7 @@
 #include "subsystem.h"
 #include "ping_service.h"
+#include "housekeeping_service.h"
+#include "function_management_service.h"
 
 void route_pkt(pq9_pkt *pkt) {
 
@@ -11,5 +13,4 @@ void route_pkt(pq9_pkt *pkt) {
     function_management_app(pkt);
   }
 
-  return SATR_OK;
 }

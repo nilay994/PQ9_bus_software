@@ -4,8 +4,6 @@
 #include "packet_utilities.h"
 #include <stdint.h>
 
-#define EPS_BOOT_COUNTER_FRAM_ADDRESS 0x0000
-
 struct parameters_memory_pool {
 
 
@@ -42,7 +40,7 @@ void get_parameter(param_id pid, void* value, uint8_t *buf, uint16_t *size) {
     cnv32_8(mem_pool.testing_4_rw, buf);
     *size = 4;
 
-  } else if(pid == eps_uptime_param_id) {
+  } else if(pid == red_uptime_param_id) {
 
         uint32_t uptime = OSAL_sys_GetTick();
         *((uint32_t*)value) = uptime;
@@ -61,6 +59,21 @@ bool set_parameter(param_id pid, void* value) {
 
   if(pid == eps_testing_4_rw_param_id) {
     mem_pool.testing_4_rw = *((uint32_t*)value);
+
+  } else if(pid == SBSYS_reset_clr_int_wdg_param_id) {
+
+    struct int_wdg_device dev;
+    read_device_parameters(INT_WDG_DEV_ID, &dev);
+    dev.clr = true;
+    write_device_parameters(INT_WDG_DEV_ID, &dev);
+
+  } else if(pid == SBSYS_reset_cmd_int_wdg_param_id) {
+
+    struct int_wdg_device dev;
+    read_device_parameters(INT_WDG_DEV_ID, &dev);
+    dev.cmd = true;
+    write_device_parameters(INT_WDG_DEV_ID, &dev);
+
   } else {
     res = false;
   }

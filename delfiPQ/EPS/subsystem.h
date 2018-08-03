@@ -5,6 +5,7 @@
 #include "packet_engine.h"
 #include "satellite_ids.h"
 #include "PQ9_bus_engine.h"
+#include "EPS_Board.h"
 
 #define SYSTEM_APP_ID _EPS_APP_ID_
 
