@@ -6,10 +6,10 @@ void cnv32_8(const uint32_t from, uint8_t *to) {
     union _cnv cnv;
 
     cnv.cnv32 = from;
-    to[0] = cnv.cnv8[0];
-    to[1] = cnv.cnv8[1];
-    to[2] = cnv.cnv8[2];
-    to[3] = cnv.cnv8[3];
+    to[0] = cnv.cnv8[3];
+    to[1] = cnv.cnv8[2];
+    to[2] = cnv.cnv8[1];
+    to[3] = cnv.cnv8[0];
 }
 
 void cnv16_8(const uint16_t from, uint8_t *to) {
@@ -17,8 +17,8 @@ void cnv16_8(const uint16_t from, uint8_t *to) {
     union _cnv cnv;
 
     cnv.cnv16[0] = from;
-    to[0] = cnv.cnv8[0];
-    to[1] = cnv.cnv8[1];
+    to[0] = cnv.cnv8[1];
+    to[1] = cnv.cnv8[0];
 
 }
 
@@ -26,10 +26,10 @@ void cnv8_32(uint8_t *from, uint32_t *to) {
 
     union _cnv cnv;
 
-    cnv.cnv8[3] = from[3];
-    cnv.cnv8[2] = from[2];
-    cnv.cnv8[1] = from[1];
-    cnv.cnv8[0] = from[0];
+    cnv.cnv8[3] = from[0];
+    cnv.cnv8[2] = from[1];
+    cnv.cnv8[1] = from[2];
+    cnv.cnv8[0] = from[3];
     *to = cnv.cnv32;
 
 }
@@ -38,8 +38,8 @@ void cnv8_16LE(uint8_t *from, uint16_t *to) {
 
     union _cnv cnv;
 
-    cnv.cnv8[1] = from[1];
-    cnv.cnv8[0] = from[0];
+    cnv.cnv8[1] = from[0];
+    cnv.cnv8[0] = from[1];
     *to = cnv.cnv16[0];
 }
 
@@ -47,8 +47,8 @@ void cnv8_16(uint8_t *from, uint16_t *to) {
 
     union _cnv cnv;
 
-    cnv.cnv8[1] = from[0];
-    cnv.cnv8[0] = from[1];
+    cnv.cnv8[1] = from[1];
+    cnv.cnv8[0] = from[0];
     *to = cnv.cnv16[0];
 }
 
