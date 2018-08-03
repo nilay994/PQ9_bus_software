@@ -1,7 +1,7 @@
 #include "packet_engine.h"
 
 #include "PQ9_bus_engine.h"
-#include "hal_uart.h"
+#include "hal_functions.h"
 
 struct _uart_data {
     uint8_t uart_rx_buf[UART_BUF_SIZE];
@@ -10,7 +10,7 @@ struct _uart_data {
 
 void import_pkt() {
 
-    SAT_returnState res_uart = SATR_PKT_INIT;
+    bool res_uart = false;
     SAT_returnState res_unpack_PQ = SATR_PKT_INIT;
 
     pq9_pkt *pkt;
@@ -18,7 +18,7 @@ void import_pkt() {
     uint16_t pq_size = 0;
 
     res_uart = HAL_uart_rx(0, &ud.uart_rx_buf, &uart_size);
-    if(res_uart == SATR_EOT) {
+    if(res_uart == true) {
 
       pkt = get_pkt(pq_size);
       if(!C_ASSERT(pkt != NULL) == true) { return ; }
