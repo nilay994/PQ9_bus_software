@@ -63,10 +63,10 @@ typedef enum {
     ADCS_DBG_DEV_ID         = 13,
     ADB_DBG_DEV_ID          = 14,
     OBC_DBG_DEV_ID          = 15,
-    EPS_OBC_MON_DEV_ID      = 16,
-    EPS_COMMS_MON_DEV_ID    = 17,
-    EPS_ADCS_MON_DEV_ID     = 18,
-    EPS_SU_MON_DEV_ID       = 19,
+    EPS_V1_MON_DEV_ID       = 16,
+    EPS_V2_MON_DEV_ID       = 17,
+    EPS_V3_MON_DEV_ID       = 18,
+    EPS_V4_MON_DEV_ID       = 19,
     EPS_DC_MON_DEV_ID       = 20,
     EPS_UR_MON_DEV_ID       = 21,
     SOL_YP_MON_DEV_ID       = 22,
@@ -90,7 +90,19 @@ typedef enum {
     ADCS_4_MON_DEV_ID       = 40,
     ADCS_TEMP_DEV_ID        = 41,
     ADCS_FRAM_DEV_ID        = 42,
-    LAST_DEV_ID             = 43
+    EPS_POWERLINES_DEV_ID   = 43,
+    EPS_INT_TEMP_DEV_ID     = 44,
+    ADB_DEP_DEV_ID          = 45,
+    ADB_INT_TEMP_DEV_ID     = 46,
+    ADCS_INT_TEMP_DEV_ID    = 47,
+    OBC_INT_TEMP_DEV_ID     = 48,
+    COMMS_TEMP_DEV_ID       = 49,
+    COMMS_ADC_DEV_ID        = 50,
+    COMMS_RF_TX_DEV_ID      = 51,
+    COMMS_RF_RX_DEV_ID      = 52,
+    COMMS_RF_CTRL_DEV_ID    = 53,
+    INT_WDG_DEV_ID          = 54,
+    LAST_DEV_ID             = 55
 }dev_id;
 
 typedef enum {
@@ -102,10 +114,10 @@ typedef enum {
 
     EPS_boot_counter_param_id          =  4,
 
-    bus1_power_switch_param_id         =  5,
-    bus2_power_switch_param_id         =  6,
-    bus3_power_switch_param_id         =  7,
-    bus4_power_switch_param_id         =  8,
+    bus1_power_switch_state_param_id   =  5,
+    bus2_power_switch_state_param_id   =  6,
+    bus3_power_switch_state_param_id   =  7,
+    bus4_power_switch_state_param_id   =  8,
     bus_power_switches_param_id        =  9,
 
     testing_2_param_id                 =  10,
@@ -150,11 +162,36 @@ typedef enum {
 
     eps_sensor_status_param_id         =  40,
 
-    eps_mcu_temp_param_id              =  41,
+    eps_int_temp_param_id              =  41,
 
     eps_testing_4_rw_param_id          =  42,
 
-    LAST_param_id                      =  43
+    bus1_power_switch_enabled_param_id =  43,
+    bus2_power_switch_enabled_param_id =  44,
+    bus3_power_switch_enabled_param_id =  45,
+    bus4_power_switch_enabled_param_id =  46,
+
+    adb_int_temp_param_id              =  47,
+    adb_sensor_status_param_id         =  48,
+    adb_deb_param_id                   =  49,
+
+    adcs_int_temp_param_id             =  50,
+    adcs_sensor_status_param_id        =  51,
+    ADCS_boot_counter_param_id         =  52,
+
+    obc_int_temp_param_id              =  53,
+    obc_sensor_status_param_id         =  54,
+    OBC_boot_counter_param_id          =  55,
+
+    red_uptime_param_id                =  56,
+
+    comms_uptime_param_id              =  57,
+    comms_sensor_status_param_id       =  58,
+
+    SBSYS_reset_cmd_int_wdg_param_id   =  59,
+    SBSYS_reset_clr_int_wdg_param_id   =  60,
+
+    LAST_param_id                      =  61
 }param_id;
 
 typedef enum {
