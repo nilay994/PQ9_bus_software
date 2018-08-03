@@ -7,10 +7,6 @@
 #include "subsystem.h"
 #include "parameters.h"
 
-#define TC_FM_SET_PARAMETER_SUBTYPE   1
-#define TC_FM_GET_PARAMETER_SUBTYPE   2
-#define TM_FM_PARAMETER_RESP_SUBTYPE  2
-
 void crt_fm_get_parameter_command(pq9_pkt *pkt, SBSYS_id dest_id) {
   pq9_pkt *resp_pkt;
 
@@ -62,6 +58,11 @@ void function_management_app(pq9_pkt *pkt) {
     crt_pkt(resp_pkt, pkt->src_id, TC_FM_TYPE, TM_FM_PARAMETER_RESP_SUBTYPE, size);
     queuePush(resp_pkt, 0);
 
+  //} else if(pkt->subtype == TC_FM_SET_DEVICE_SUBTYPE) {
+
+  //  write_device_parameters(pkt->msg[0], &pkt->msg[1]);
+
+   // ack_flag = true;
   }
 
   if(ack_flag) {

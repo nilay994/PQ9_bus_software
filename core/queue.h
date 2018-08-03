@@ -5,7 +5,6 @@
 #include "satellite.h"
 #include "PQ9_bus_engine.h"
 
-
 SAT_returnState queuePush_hk(pq9_pkt *pkt, SBSYS_id app_id);
 
 SAT_returnState queuePush(pq9_pkt *pkt, SBSYS_id app_id);
