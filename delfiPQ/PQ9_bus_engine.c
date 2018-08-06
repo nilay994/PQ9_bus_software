@@ -90,10 +90,6 @@ bool unpack_PQ9_BUS(const uint8_t *buf,
   pq_pkt->size -= 2; //type and subtype
   memcpy(pq_pkt->msg, &buf[5], pq_pkt->size);
 
- #if(SYSTEM_APP_ID != PQ9_MASTER_APP_ID)
-   enable_PQ9_tx();
- #endif
-
   return true;
 }
 

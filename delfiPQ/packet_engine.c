@@ -26,6 +26,11 @@ void import_pkt() {
                                           uart_size,
                                           pkt);
       if(res_unpack_PQ == true) {
+
+        #if(SYSTEM_APP_ID != PQ9_MASTER_APP_ID)
+          enable_PQ9_tx();
+        #endif
+
         route_pkt(pkt);
       }
       free_pkt(pkt);
