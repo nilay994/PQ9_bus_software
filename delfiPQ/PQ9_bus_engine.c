@@ -71,11 +71,11 @@ bool unpack_PQ9_BUS(const uint8_t *buf,
   pq_pkt->subtype = buf[4];
 
   if(pq_pkt->size != size - 5) {
-    return true;
+    return false;
   }
 
   if(pq_pkt->dest_id != SYSTEM_APP_ID) {
-    return true;
+    return false;
   }
 
   uint16_t crc_calc = calculate_crc_PQ9(buf, size - 2);
@@ -84,7 +84,7 @@ bool unpack_PQ9_BUS(const uint8_t *buf,
   cnv8_16LE(&buf[size-2], &crc_pkt);
 
   if(crc_calc != crc_pkt) {
-    return true;
+    return false;
   }
 
   pq_pkt->size -= 2; //type and subtype
@@ -94,37 +94,37 @@ bool unpack_PQ9_BUS(const uint8_t *buf,
    enable_PQ9_tx();
  #endif
 
-  return false;
+  return true;
 }
 
 bool pack_PQ9_BUS(pq9_pkt *pq_pkt, uint8_t *buf, uint16_t *size) {
 
   if(!C_ASSERT(pq_pkt != NULL) == true) {
-    return true;
+    return false;
   }
 
   if(!C_ASSERT(buf != NULL) == true) {
-    return true;
+    return false;
   }
 
   if(!C_ASSERT(size != NULL) == true) {
-    return true;
+    return false;
   }
 
 #if(SYSTEM_APP_ID == PQ9_MASTER_APP_ID)
   if(pq_pkt->dest_id == PQ9_MASTER_APP_ID) {
-    return true;
+    return false;
   }
 #else
   if(pq_pkt->dest_id != PQ9_MASTER_APP_ID) {
-    return true;
+    return false;
   }
 #endif
 
   pq_pkt->src_id = SYSTEM_APP_ID;
 
   if(!C_ASSERT(pq_pkt->src_id != pq_pkt->dest_id) == true) {
-    return true;
+    return false;
   }
 
   *size = pq_pkt->size + 5;
@@ -140,7 +140,7 @@ bool pack_PQ9_BUS(pq9_pkt *pq_pkt, uint8_t *buf, uint16_t *size) {
   uint16_t crc = calculate_crc_PQ9(buf, *size-2);
   cnv16_8(crc, &buf[*size-2]);
 
-  return false;
+  return true;
 }
 
 crt_pkt(pq9_pkt *pq_pkt, SBSYS_id id, uint8_t type, uint8_t subtype, uint8_t size) {

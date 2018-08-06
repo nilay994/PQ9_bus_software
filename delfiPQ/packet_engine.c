@@ -11,7 +11,6 @@ struct _uart_data {
 void import_pkt() {
 
     bool res_uart = false;
-    SAT_returnState res_unpack_PQ = SATR_PKT_INIT;
 
     pq9_pkt *pkt;
     uint16_t uart_size = 0;
@@ -23,10 +22,10 @@ void import_pkt() {
       pkt = get_pkt(pq_size);
       if(!C_ASSERT(pkt != NULL) == true) { return ; }
 
-      res_unpack_PQ = unpack_PQ9_BUS(&ud.uart_rx_buf,
+      bool res_unpack_PQ = unpack_PQ9_BUS(&ud.uart_rx_buf,
                                           uart_size,
                                           pkt);
-      if(res_unpack_PQ == SATR_OK) {
+      if(res_unpack_PQ == true) {
         route_pkt(pkt);
       }
       free_pkt(pkt);
@@ -37,7 +36,6 @@ void export_pkt() {
 
     pq9_pkt *pkt = 0;
     uint16_t size = 0;
-    SAT_returnState res = SATR_ERROR;
 
     if(!is_enabled_PQ9_tx()) {
     //  return ;
@@ -47,8 +45,8 @@ void export_pkt() {
       return ;
     }
 
-    res = pack_PQ9_BUS(pkt, ud.uart_tx_buf, &size);
-    if(res == SATR_ERROR) {
+    bool res = pack_PQ9_BUS(pkt, ud.uart_tx_buf, &size);
+    if(res == false) {
       free_pkt(pkt);
       return ;
     }
