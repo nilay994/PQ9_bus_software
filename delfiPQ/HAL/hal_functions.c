@@ -116,8 +116,6 @@ void HAL_uart_tx(dev_id id, uint8_t *buf, uint16_t size) {
   }
 
   UART_writePolling(uart_pq9_bus, buf, size);
-  disable_PQ9_tx();
-  GPIO_write(PQ9_EN, 0);
 }
 
 void HAL_PQ9_BUS_enable_tx() {
@@ -129,6 +127,10 @@ void HAL_PQ9_BUS_enable_tx() {
       //while (1);
   }
 
+}
+
+void HAL_PQ9_BUS_disable_tx() {
+  GPIO_write(PQ9_EN, 0);
 }
 
 /*

@@ -51,13 +51,14 @@ bool is_enabled_PQ9_tx() {
   return pq9_tx_flag;
 }
 
-void disable_PQ9_tx() {
-  pq9_tx_flag = false;
-}
-
 void enable_PQ9_tx() {
   pq9_tx_flag = true;
   HAL_PQ9_BUS_enable_tx();
+}
+
+void disable_PQ9_tx() {
+  pq9_tx_flag = false;
+  HAL_PQ9_BUS_disable_tx();
 }
 
 bool unpack_PQ9_BUS(const uint8_t *buf,

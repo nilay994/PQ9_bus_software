@@ -63,5 +63,7 @@ void export_pkt() {
 
     HAL_uart_tx(0, &ud.uart_tx_buf, size);
 
+    disable_PQ9_tx();
+
     free_pkt(pkt);
 }

@@ -12,6 +12,8 @@ void HAL_uart_tx(dev_id id, uint8_t *buf, uint16_t size);
 
 void HAL_PQ9_BUS_enable_tx();
 
+void HAL_PQ9_BUS_disable_tx();
+
 bool HAL_SPI_readWrite( dev_id id,
                         void *writeBuf,
                         size_t count,

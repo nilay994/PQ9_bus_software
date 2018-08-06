@@ -52,11 +52,6 @@ void HAL_access_device_peripheral_meta(dev_id id, void *value) {
 
 }
 
-void HAL_PQ9_BUS_disable_tx(Timer_Handle myHandle) {
-  //disable_PQ9_tx();
-  //GPIO_write(PQ9_EN, 0);
-}
-
 void temp(UART_Handle handle, void *buf, size_t count) {
 
 }
