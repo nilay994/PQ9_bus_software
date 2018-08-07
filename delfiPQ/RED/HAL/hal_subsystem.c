@@ -24,6 +24,8 @@ SPI_Handle spi_fram;
 Timer_Handle tim_pq9_bus_tx_en;
 Watchdog_Handle intWatchdogHandle;
 
+Timer_Handle tim_pq9_bus_rx_en;
+
 void HAL_access_device_peripheral(dev_id id, void ** handle) {
 
   if(id == EPS_BUS_DEV_ID) {
@@ -38,11 +40,6 @@ HAL_access_device_peripheral_meta(dev_id id, void *value) {
 
 }
 
-void HAL_PQ9_BUS_disable_tx() {
-  disable_PQ9_tx();
-  //GPIO_write(PQ9_EN, 0);
-}
-
 void temp(UART_Handle handle, void *buf, size_t count) {
 
 }
@@ -51,6 +48,18 @@ void watchdogCallback(uintptr_t unused)
 {
     /* Clear watchdog interrupt flag */
     Watchdog_clear(intWatchdogHandle);
+
+}
+
+void test_tim_int(){
+  GPIO_toggle(Board_GPIO_LED1);
+}
+
+void HAL_enable_PQ9_rx() {
+
+  if(!C_ASSERT(Timer_start(tim_pq9_bus_rx_en) != Timer_STATUS_ERROR) == true) {
+    usleep(1);
+  }
 
 }
 
@@ -90,13 +99,24 @@ void HAL_peripheral_open() {
   uart_dbg_bus = UART_open(DBG, &uartParams);
 
   Timer_Params_init(&params);
-  params.periodUnits = Timer_PERIOD_HZ;
-  params.period = 1;
+  params.periodUnits = Timer_PERIOD_US;
+  params.period = 5000000;
   params.timerMode  = Timer_ONESHOT_CALLBACK;
-  params.timerCallback = HAL_PQ9_BUS_disable_tx;
+  params.timerCallback = disable_PQ9_tx;
   tim_pq9_bus_tx_en = Timer_open(PQ9_TX_TIM, &params);
 
   if(!C_ASSERT(tim_pq9_bus_tx_en != NULL) == true) {
+    usleep(1);
+  }
+
+  Timer_Params_init(&params);
+  params.periodUnits = Timer_PERIOD_US;
+  params.period = 10000000;
+  params.timerMode  = Timer_CONTINUOUS_CALLBACK;
+  params.timerCallback = test_tim_int; //enable_PQ9_tx;
+  tim_pq9_bus_rx_en = Timer_open(PQ9_RX_TIM, &params);
+
+  if(!C_ASSERT(tim_pq9_bus_rx_en != NULL) == true) {
     usleep(1);
   }
 
@@ -107,6 +127,8 @@ void HAL_peripheral_open() {
   if(!C_ASSERT(intWatchdogHandle != NULL) == true) {
     usleep(1);
   }
+
+  HAL_enable_PQ9_rx();
 
 }
 

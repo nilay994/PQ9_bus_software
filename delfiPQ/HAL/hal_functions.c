@@ -122,15 +122,18 @@ void HAL_PQ9_BUS_enable_tx() {
 
   GPIO_write(PQ9_EN, 1);
 
-  if (Timer_start(tim_pq9_bus_tx_en) == Timer_STATUS_ERROR) {
-      /* Failed to start timer */
-      //while (1);
+  if(!C_ASSERT(Timer_start(tim_pq9_bus_tx_en) != Timer_STATUS_ERROR) == true) {
+
   }
 
 }
 
 void HAL_PQ9_BUS_disable_tx() {
+
   GPIO_write(PQ9_EN, 0);
+
+  Timer_stop(tim_pq9_bus_tx_en);
+
 }
 
 /*

@@ -110,10 +110,11 @@ typedef enum Board_SPIName {
  *  @def    MSP_EXP432P401R_TimerName
  *  @brief  Enum of Timer names on the MSP_EXP432P401R dev board
  */
-typedef enum Board_TimerName {
-    PQ9_TX_TIM = 0,
-   Board_TIMERCOUNT
-} Board_TimerName;
+ typedef enum Board_TimerName {
+     PQ9_TX_TIM = 0,
+     PQ9_RX_TIM = 1,
+    Board_TIMERCOUNT
+ } Board_TimerName;
 
 /*!
  *  @def    MSP_EXP432P401R_UARTName

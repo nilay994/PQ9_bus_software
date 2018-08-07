@@ -22,6 +22,7 @@ UART_Handle uart_dbg_bus;
 I2C_Handle i2c_brd;
 SPI_Handle spi_fram;
 Timer_Handle tim_pq9_bus_tx_en;
+Timer_Handle tim_pq9_bus_rx_en;
 ADC_Handle adc_internal_temp;
 Watchdog_Handle intWatchdogHandle;
 
@@ -121,13 +122,24 @@ void HAL_peripheral_open() {
   }
 
   Timer_Params_init(&params);
-  params.periodUnits = Timer_PERIOD_HZ;
-  params.period = 1;
+  params.periodUnits = Timer_PERIOD_US;
+  params.period = 5000000;
   params.timerMode  = Timer_ONESHOT_CALLBACK;
-  params.timerCallback = HAL_PQ9_BUS_disable_tx;
+  params.timerCallback = disable_PQ9_tx;
   tim_pq9_bus_tx_en = Timer_open(PQ9_TX_TIM, &params);
 
   if(!C_ASSERT(tim_pq9_bus_tx_en != NULL) == true) {
+    usleep(1);
+  }
+
+  Timer_Params_init(&params);
+  params.periodUnits = Timer_PERIOD_US;
+  params.period = 10000000;
+  params.timerMode  = Timer_CONTINUOUS_CALLBACK;
+  params.timerCallback = enable_PQ9_tx;
+  tim_pq9_bus_rx_en = Timer_open(PQ9_RX_TIM, &params);
+
+  if(!C_ASSERT(tim_pq9_bus_rx_en != NULL) == true) {
     usleep(1);
   }
 
@@ -144,6 +156,22 @@ void HAL_peripheral_open() {
   wdgparams.callbackFxn = (Watchdog_Callback) watchdogCallback;
   intWatchdogHandle = Watchdog_open(INTWATCHDOG, &wdgparams);
   if(!C_ASSERT(intWatchdogHandle != NULL) == true) {
+    usleep(1);
+  }
+
+}
+
+void HAL_reset_PQ9_rx() {
+
+  if(!C_ASSERT(Timer_start(tim_pq9_bus_rx_en) != Timer_STATUS_ERROR) == true) {
+    usleep(1);
+  }
+
+}
+
+void HAL_enable_PQ9_rx() {
+
+  if(!C_ASSERT(Timer_start(tim_pq9_bus_rx_en) != Timer_STATUS_ERROR) == true) {
     usleep(1);
   }
 

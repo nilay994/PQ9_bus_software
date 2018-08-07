@@ -111,10 +111,10 @@ void HAL_peripheral_open() {
   }
 
   Timer_Params_init(&params);
-  params.periodUnits = Timer_PERIOD_HZ;
-  params.period = 1;
+  params.periodUnits = Timer_PERIOD_US;
+  params.period = 5000000;
   params.timerMode  = Timer_ONESHOT_CALLBACK;
-  params.timerCallback = HAL_PQ9_BUS_disable_tx;
+  params.timerCallback = disable_PQ9_tx;
   tim_pq9_bus_tx_en = Timer_open(PQ9_TX_TIM, &params);
 
   if(!C_ASSERT(tim_pq9_bus_tx_en != NULL) == true) {

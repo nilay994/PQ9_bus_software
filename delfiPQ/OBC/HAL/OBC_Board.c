@@ -261,6 +261,7 @@ const SPI_Config SPI_config[Board_SPICOUNT] = {
 };
 
 const uint_least8_t SPI_count = Board_SPICOUNT;
+
 /*
  *  =============================== Timer ===============================
  */
@@ -271,22 +272,34 @@ TimerMSP432_Object timerMSP432Objects[Board_TIMERCOUNT];
 
 const TimerMSP432_HWAttrs timerMSP432HWAttrs[Board_TIMERCOUNT] = {
     {
-        .timerBaseAddress = TIMER32_0_BASE,
+        .timerBaseAddress = TIMER_A1_BASE,
         .clockSource = TIMER_A_CLOCKSOURCE_SMCLK,
-        .intNum = INT_T32_INT1,
+        .intNum = INT_TA1_0,
+        .intPriority = ~0
+    },
+    {
+        .timerBaseAddress = TIMER_A0_BASE,
+        .clockSource = TIMER_A_CLOCKSOURCE_SMCLK,
+        .intNum = INT_TA0_0,
         .intPriority = ~0
     },
 };
 
 const Timer_Config Timer_config[Board_TIMERCOUNT] = {
     {
-        .fxnTablePtr = &TimerMSP432_Timer32_fxnTable,
+        .fxnTablePtr = &TimerMSP432_Timer_A_fxnTable,
         .object = &timerMSP432Objects[PQ9_TX_TIM],
         .hwAttrs = &timerMSP432HWAttrs[PQ9_TX_TIM]
+    },
+    {
+        .fxnTablePtr = &TimerMSP432_Timer_A_fxnTable,
+        .object = &timerMSP432Objects[PQ9_RX_TIM],
+        .hwAttrs = &timerMSP432HWAttrs[PQ9_RX_TIM]
     },
 };
 
 const uint_least8_t Timer_count = Board_TIMERCOUNT;
+
 
 /*
  *  =============================== UART ===============================
