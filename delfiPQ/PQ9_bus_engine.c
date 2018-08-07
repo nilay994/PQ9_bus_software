@@ -1,5 +1,6 @@
 #include "PQ9_bus_engine.h"
 #include "subsystem.h"
+#include "hal_functions.h"
 
 #define CRC_POLY 0x1021
 
@@ -54,6 +55,9 @@ bool is_enabled_PQ9_tx() {
 void enable_PQ9_tx() {
   pq9_tx_flag = true;
   HAL_PQ9_BUS_enable_tx();
+  #if(SYSTEM_APP_ID == PQ9_MASTER_APP_ID)
+    HAL_reset_PQ9_rx();
+  #endif
 }
 
 void disable_PQ9_tx() {
