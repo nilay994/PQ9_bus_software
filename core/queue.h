@@ -11,9 +11,7 @@ struct _queue {
     uint8_t tail;
 };
 
-SAT_returnState queuePush_hk(pq9_pkt *pkt, pool_id id);
-
-SAT_returnState queuePush(pq9_pkt *pkt, pool_id id);
+bool queuePush(pq9_pkt *pkt, pool_id id);
 
 pq9_pkt * queuePop(pool_id id);
 

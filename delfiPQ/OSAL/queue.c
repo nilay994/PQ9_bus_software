@@ -44,16 +44,7 @@ void queueInit() {
 
 }
 
-SAT_returnState queuePush_hk(pq9_pkt *pkt, SBSYS_id app_id) {
-
-    size_t temp = (size_t)pkt;
-
-    Mailbox_post(mbxHandle_hk, &temp, BIOS_NO_WAIT);
-
-    return SATR_OK;
-}
-
-SAT_returnState queuePush(pq9_pkt *pkt, SBSYS_id app_id) {
+bool queuePush(pq9_pkt *pkt, SBSYS_id app_id) {
 
     size_t temp = (size_t)pkt;
 

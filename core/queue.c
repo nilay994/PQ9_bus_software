@@ -3,26 +3,26 @@
 #include "pkt_pool.h"
 #include "subsystem_pool.h"
 
-SAT_returnState queuePush(pq9_pkt *pkt, pool_id id) {
+bool queuePush(pq9_pkt *pkt, pool_id id) {
 
   struct _queue *queue = get_subsystem_queue(id);
-  if(!C_ASSERT(queue != NULL) == true) { return SATR_ERROR; }
+  if(!C_ASSERT(queue != NULL) == true) { return false; }
 
   if((queue->head) == ((((queue->tail) - 1) + POOL_PKT_SIZE) % POOL_PKT_SIZE)) {
-      return SATR_ERROR;
+      return false;
   }
 
   queue->fifo[queue->head] = pkt;
 
   queue->head = (queue->head + 1) % POOL_PKT_SIZE;
 
-  return SATR_OK;
+  return true;
 }
 
 pq9_pkt * queuePop(pool_id id) {
 
   struct _queue *queue = get_subsystem_queue(id);
-  if(!C_ASSERT(queue != NULL) == true) { return SATR_ERROR; }
+  if(!C_ASSERT(queue != NULL) == true) { return NULL; }
 
   pq9_pkt *pkt;
 
