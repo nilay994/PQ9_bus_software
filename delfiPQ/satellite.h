@@ -226,4 +226,9 @@ typedef enum {
     SATR_LAST                  = 3
 }SAT_returnState;
 
+typedef enum {
+    RS_POOL_ID              =  0,
+    LAST_POOL_ID            =  1
+}pool_id;
+
 #endif

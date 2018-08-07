@@ -113,6 +113,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+f = pq9_path + "delfiPQ/RED/subsystem_pool.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
 f = pq9_path + "delfiPQ/RED/subsystem.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
@@ -233,6 +238,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "delfiPQ/ADB/parameters.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "delfiPQ/ADB/subsystem_pool.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
@@ -381,6 +391,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "delfiPQ/EPS/safety_check.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "delfiPQ/EPS/subsystem_pool.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
@@ -539,6 +554,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+f = pq9_path + "delfiPQ/OBC/subsystem_pool.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
 f = pq9_path + "delfiPQ/OBC/subsystem.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
@@ -683,6 +703,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "delfiPQ/ADCS/parameters.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "delfiPQ/ADCS/subsystem_pool.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
@@ -832,6 +857,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "delfiPQ/COMMS/parameters.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "delfiPQ/COMMS/subsystem_pool.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
