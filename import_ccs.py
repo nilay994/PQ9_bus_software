@@ -554,6 +554,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+f = pq9_path + "delfiPQ/OBC/rf_packet.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
 f = pq9_path + "delfiPQ/OBC/subsystem_pool.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
@@ -585,6 +590,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+
+f = pq9_path + "core/en_data_service.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
 
 f = pq9_path + "core/function_management_service.c"
 cmd = "ln -s " + f + " " + folder
@@ -861,6 +871,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+f = pq9_path + "delfiPQ/COMMS/rf_packet.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
 f = pq9_path + "delfiPQ/COMMS/subsystem_pool.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
@@ -892,6 +907,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+
+f = pq9_path + "core/en_data_service.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
 
 f = pq9_path + "core/function_management_service.c"
 cmd = "ln -s " + f + " " + folder
