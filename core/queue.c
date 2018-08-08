@@ -70,9 +70,3 @@ void queue_IDLE(pool_id id) {
   }
 
 }
-
-void queueInit() {
-
-  subsystem_queue_init();
-
-}
