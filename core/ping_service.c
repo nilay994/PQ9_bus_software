@@ -10,7 +10,7 @@ void crt_ping_resp(pq9_pkt *pkt) {
   }
 
   crt_pkt(resp_pkt, OBC_APP_ID, TC_PING_TYPE, TM_PING_RESP_SUBTYPE, 0);
-  queuePush(resp_pkt, 0);
+  queuePush(resp_pkt, RS_POOL_ID);
 }
 
 void ping_app(pq9_pkt *pkt) {

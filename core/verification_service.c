@@ -23,7 +23,7 @@ void crt_ack_response(pq9_pkt *pkt, bool status) {
   }
 
   crt_pkt(resp_pkt, pkt->src_id, TC_VER_TYPE, subtype, 0);
-  queuePush(resp_pkt, 0);
+  queuePush(resp_pkt, RS_POOL_ID);
 }
 
 void verification_app(pq9_pkt *pkt) {

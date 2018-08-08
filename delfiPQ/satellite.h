@@ -228,7 +228,8 @@ typedef enum {
 
 typedef enum {
     RS_POOL_ID              =  0,
-    LAST_POOL_ID            =  1
+    RF_POOL_ID              =  1,
+    LAST_POOL_ID            =  2
 }pool_id;
 
 #endif

@@ -44,7 +44,7 @@ void export_pkt() {
     //  return ;
     }
 
-    if((pkt = queuePop(1)) ==  NULL) {
+    if((pkt = queuePop(RS_POOL_ID)) ==  NULL) {
       return ;
     }
 
