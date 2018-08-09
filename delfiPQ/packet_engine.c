@@ -8,6 +8,47 @@ struct _uart_data {
     uint8_t uart_tx_buf[UART_BUF_SIZE];
 } ud;
 
+void master_() {
+
+  crt_hk_request(ADB_APP_ID);
+  usleep(1);
+
+  crt_hk_request(EPS_APP_ID);
+  usleep(1);
+
+  crt_hk_request(ADCS_APP_ID);
+  usleep(1);
+
+  crt_hk_request(COMMS_APP_ID);
+  usleep(1);
+
+  crt_en_request(COMMS_APP_ID);
+  usleep(1);
+
+  sleep(2);
+
+  crt_housekeeping_transmit(ADB_APP_ID);
+  usleep(1);
+
+  crt_housekeeping_transmit(EPS_APP_ID);
+  usleep(1);
+
+  crt_housekeeping_transmit(ADCS_APP_ID);
+  usleep(1);
+
+  crt_housekeeping_transmit(COMMS_APP_ID);
+  usleep(1);
+
+  crt_housekeeping_transmit(OBC_APP_ID);
+  usleep(1);
+
+  usleep(1);
+
+  //add parameter
+  OSAL_sys_delay(5);
+
+}
+
 void import_pkt() {
 
     bool res_uart = false;
