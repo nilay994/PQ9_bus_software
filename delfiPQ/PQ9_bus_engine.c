@@ -4,6 +4,8 @@
 
 #define CRC_POLY 0x1021
 
+uint16_t packet_counter = 0;
+
 /**** CRC calculator ****/
 uint16_t crc_PQ9(uint16_t crc1, uint8_t data, uint16_t poly) {
 
@@ -72,8 +74,9 @@ bool unpack_PQ9_BUS(const uint8_t *buf,
   pq_pkt->dest_id = buf[0];
   pq_pkt->size = buf[1];
   pq_pkt->src_id = buf[2];
-  pq_pkt->type = buf[3];
-  pq_pkt->subtype = buf[4];
+  cnv8_16LE(&buf[3], &pq_pkt->packet_counter);
+  pq_pkt->type = buf[5];
+  pq_pkt->subtype = buf[6];
 
   if(pq_pkt->size != size - 5) {
     return false;
@@ -93,7 +96,8 @@ bool unpack_PQ9_BUS(const uint8_t *buf,
   }
 
   pq_pkt->size -= 2; //type and subtype
-  memcpy(pq_pkt->msg, &buf[5], pq_pkt->size);
+  pq_pkt->size -= 2; //packet counter
+  memcpy(pq_pkt->msg, &buf[7], pq_pkt->size);
 
   return true;
 }
@@ -128,18 +132,20 @@ bool pack_PQ9_BUS(pq9_pkt *pq_pkt, uint8_t *buf, uint16_t *size) {
     return false;
   }
 
-  *size = pq_pkt->size + 5;
   *size = pq_pkt->size + 3; //header
 
   *size += 2; //type and subtype
 
+  packet_counter++;
+
   buf[0] = pq_pkt->dest_id;
   buf[1] = pq_pkt->size;
   buf[2] = pq_pkt->src_id;
-  buf[3] = pq_pkt->type;
-  buf[4] = pq_pkt->subtype;
+  cnv16_8(packet_counter, &buf[3]);
+  buf[5] = pq_pkt->type;
+  buf[6] = pq_pkt->subtype;
 
-  memcpy(&buf[5], pq_pkt->msg, pq_pkt->size-2);
+  memcpy(&buf[7], pq_pkt->msg, pq_pkt->size-2);
 
   uint16_t crc = calculate_crc_PQ9(buf, *size-2);
   cnv16_8(crc, &buf[*size-2]);
@@ -150,7 +156,7 @@ bool pack_PQ9_BUS(pq9_pkt *pq_pkt, uint8_t *buf, uint16_t *size) {
 crt_pkt(pq9_pkt *pq_pkt, SBSYS_id id, uint8_t type, uint8_t subtype, uint8_t size) {
 
   pq_pkt->dest_id = id;
-  pq_pkt->size = size + 2; //type and subtype
+  pq_pkt->size = size + 2 + 2; //type and subtype + packet counter
   pq_pkt->src_id = SYSTEM_APP_ID;
   pq_pkt->type = type;
   pq_pkt->subtype = subtype;
