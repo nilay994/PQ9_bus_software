@@ -30,6 +30,7 @@
 
 #define TC_HK_REQ_SUBTYPE  1
 #define TM_HK_RESP_SUBTYPE 2
+#define TM_HK_RF_SUBTYPE   6
 
 #define TM_ACK_OK_SUBTYPE    2
 #define TM_ACK_ERROR_SUBTYPE 4
