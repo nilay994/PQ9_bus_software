@@ -129,6 +129,9 @@ bool pack_PQ9_BUS(pq9_pkt *pq_pkt, uint8_t *buf, uint16_t *size) {
   }
 
   *size = pq_pkt->size + 5;
+  *size = pq_pkt->size + 3; //header
+
+  *size += 2; //type and subtype
 
   buf[0] = pq_pkt->dest_id;
   buf[1] = pq_pkt->size;
