@@ -3,7 +3,7 @@
 #include "satellite.h"
 #include "subsystem.h"
 
-void crt_en_request(pq9_pkt *pkt, SBSYS_id dest_id) {
+void crt_en_request(SBSYS_id dest_id) {
   pq9_pkt *resp_pkt;
 
   resp_pkt = get_pkt(0);

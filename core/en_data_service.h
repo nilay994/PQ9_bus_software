@@ -4,7 +4,7 @@
 #include "satellite.h"
 #include "PQ9_bus_engine.h"
 
-void crt_en_request(pq9_pkt *pkt, SBSYS_id dest_id);
+void crt_en_request(SBSYS_id dest_id);
 
 void crt_en_resp(pq9_pkt *pkt);
 

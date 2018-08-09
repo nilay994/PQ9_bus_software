@@ -41,6 +41,6 @@ bool transfer_rf_packet(uint8_t *buf, uint16_t *size) {
   return true;
 }
 
-void route_en_resp(pq9_pkt pkt) {
+void route_en_resp(pq9_pkt *pkt) {
 
 }
