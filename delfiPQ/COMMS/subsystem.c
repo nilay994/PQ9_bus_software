@@ -15,6 +15,8 @@ void route_pkt(pq9_pkt *pkt) {
     en_data_app(pkt);
   } else if(pkt->type == TC_FM_TYPE) {
     function_management_app(pkt);
+  } else if(pkt->type == TC_STATS_TYPE) {
+    pstats_app(pkt);
   }
 
 }

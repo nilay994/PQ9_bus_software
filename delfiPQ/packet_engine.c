@@ -2,6 +2,7 @@
 
 #include "PQ9_bus_engine.h"
 #include "hal_functions.h"
+#include "packet_stats.h"
 
 struct _uart_data {
     uint8_t uart_rx_buf[UART_BUF_SIZE];
@@ -60,17 +61,26 @@ void import_pkt() {
     res_uart = HAL_uart_rx(0, &ud.uart_rx_buf, &uart_size);
     if(res_uart == true) {
 
+      update_pstats_rx_raw_counter();
+
       pkt = get_pkt(pq_size);
-      if(!C_ASSERT(pkt != NULL) == true) { return ; }
+      if(!C_ASSERT(pkt != NULL) == true) {
+        update_pstats_rx_err_counter();
+        return ;
+      }
 
       bool res_unpack_PQ = unpack_PQ9_BUS(&ud.uart_rx_buf,
                                           uart_size,
                                           pkt);
       if(res_unpack_PQ == true) {
 
+        update_pstats_rx_counter(pkt->src_id);
+
         enable_PQ9_tx();
 
         route_pkt(pkt);
+      } else {
+        update_pstats_rx_err_counter();
       }
       free_pkt(pkt);
     }
@@ -100,6 +110,7 @@ void export_pkt() {
       return ;
     }
 
+    update_pstats_tx_counter(pkt->dest_id);
     HAL_uart_tx(0, &ud.uart_tx_buf, size);
 
     disable_PQ9_tx();

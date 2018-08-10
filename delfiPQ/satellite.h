@@ -22,6 +22,7 @@
 #define TC_HK_TYPE    3
 #define TC_VER_TYPE   4
 #define TC_EN_TYPE    5
+#define TC_STATS_TYPE 6
 #define TC_PING_TYPE 17
 
 #define TC_FM_GET_PARAMETER_SUBTYPE   1
@@ -38,6 +39,9 @@
 #define TC_EN_REQ_SUBTYPE    1
 #define TM_EN_RESP_SUBTYPE   2
 #define TM_EN_EMPTY_SUBTYPE  5
+
+#define TC_STATS_REQ_SUBTYPE    1
+#define TM_STATS_RESP_SUBTYPE   2
 
 #define TC_PING_REQ_SUBTYPE  1
 #define TM_PING_RESP_SUBTYPE 2

@@ -154,6 +154,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+f = pq9_path + "core/packet_stats.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
 f = pq9_path + "core/packet_utilities.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
@@ -279,6 +284,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "core/housekeeping_service.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "core/packet_stats.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
@@ -432,6 +442,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "core/housekeeping_service.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "core/packet_stats.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
@@ -606,6 +621,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+f = pq9_path + "core/packet_stats.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
 f = pq9_path + "core/packet_utilities.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
@@ -755,6 +775,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "core/housekeeping_service.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "core/packet_stats.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
@@ -924,6 +949,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "core/packet_utilities.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "core/packet_stats.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
