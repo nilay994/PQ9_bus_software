@@ -1,7 +1,9 @@
 #include "subsystem.h"
 #include "ping_service.h"
+#include "en_data_service.h"
 #include "housekeeping_service.h"
 #include "function_management_service.h"
+#include "packet_stats.h"
 
 void route_pkt(pq9_pkt *pkt) {
 
