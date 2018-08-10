@@ -6,7 +6,7 @@
 
 void crt_pstats_request(SBSYS_id dest_id);
 
-void crt_pstats_resp(pq9_pkt *pkt);
+void crt_pstats_resp(SBSYS_id dest_id);
 
 void pstats_app(pq9_pkt *pkt);
 

@@ -1,6 +1,6 @@
 #include "ping_service.h"
 
-void crt_ping_resp(pq9_pkt *pkt) {
+void crt_ping_resp(SBSYS_id dest_id) {
 
   pq9_pkt *resp_pkt;
 
@@ -9,13 +9,13 @@ void crt_ping_resp(pq9_pkt *pkt) {
     return ;
   }
 
-  crt_pkt(resp_pkt, OBC_APP_ID, TC_PING_TYPE, TM_PING_RESP_SUBTYPE, 0);
+  crt_pkt(resp_pkt, dest_id, TC_PING_TYPE, TM_PING_RESP_SUBTYPE, 0);
   queuePush(resp_pkt, RS_POOL_ID);
 }
 
 void ping_app(pq9_pkt *pkt) {
 
   if(pkt->subtype == TC_PING_REQ_SUBTYPE) {
-    crt_ping_resp(pkt);
+    crt_ping_resp(pkt->src_id);
   }
 }

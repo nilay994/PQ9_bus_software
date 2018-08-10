@@ -6,7 +6,7 @@
 
 void crt_en_request(SBSYS_id dest_id);
 
-void crt_en_resp(pq9_pkt *pkt);
+void crt_en_resp(SBSYS_id dest_id);
 
 void en_data_app(pq9_pkt *pkt);
 

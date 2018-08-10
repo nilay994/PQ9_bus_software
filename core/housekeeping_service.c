@@ -14,7 +14,7 @@ void crt_hk_request(SBSYS_id dest_id) {
   queuePush(resp_pkt, RS_POOL_ID);
 }
 
-void crt_housekeeping_resp(pq9_pkt *pkt) {
+void crt_housekeeping_resp(SBSYS_id dest_id) {
   pq9_pkt *resp_pkt;
 
   resp_pkt = get_pkt(0);
@@ -27,7 +27,7 @@ void crt_housekeeping_resp(pq9_pkt *pkt) {
 
   populate_housekeeping(&resp_pkt->msg[1], &size);
 
-  crt_pkt(resp_pkt, pkt->src_id, TC_HK_TYPE, TM_HK_RESP_SUBTYPE, size);
+  crt_pkt(resp_pkt, dest_id, TC_HK_TYPE, TM_HK_RESP_SUBTYPE, size);
   queuePush(resp_pkt, RS_POOL_ID);
 }
 
@@ -58,7 +58,7 @@ void store_housekeeping_resp(pq9_pkt *pkt) {
 void housekeeping_app(pq9_pkt *pkt) {
 
   if(pkt->subtype == TC_HK_REQ_SUBTYPE) {
-    crt_housekeeping_resp(pkt);
+    crt_housekeeping_resp(pkt->src_id);
   } else if(pkt->subtype == TM_HK_RESP_SUBTYPE) {
     store_housekeeping_resp(pkt);
   } else if(pkt->subtype == TM_HK_RF_SUBTYPE) {
