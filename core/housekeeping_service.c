@@ -43,6 +43,17 @@ void crt_housekeeping_transmit(SBSYS_id id) {
 
   retrieve_housekeeping(id, resp_pkt->msg, &size);
 
+  if(size == 0) {
+    resp_pkt->msg[0] = id;
+
+    resp_pkt->msg[1] = 'E';
+    resp_pkt->msg[2] = 'M';
+    resp_pkt->msg[3] = 'P';
+    resp_pkt->msg[4] = 'T';
+    resp_pkt->msg[5] = 'Y';
+    size = 6;
+  }
+
   crt_pkt(resp_pkt, COMMS_APP_ID, TC_HK_TYPE, TM_HK_RF_SUBTYPE, size);
   queuePush(resp_pkt, RS_POOL_ID);
 }
