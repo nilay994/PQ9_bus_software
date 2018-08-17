@@ -17,6 +17,7 @@
 #define _ADCS_APP_ID_  5
 #define _GND_APP_ID_   6
 #define _DBG_APP_ID_   7
-#define _LAST_APP_ID_  8
+#define _EGSE_APP_ID_  8
+#define _LAST_APP_ID_  9
 
 #endif /* SERVICES_SUBSYSTEMS_IDS_H_ */

@@ -54,6 +54,7 @@ typedef enum {
     ADB_APP_ID      = _ADB_APP_ID_,
     GND_APP_ID      = _GND_APP_ID_,
     DBG_APP_ID      = _DBG_APP_ID_,
+    EGSE_APP_ID     = _EGSE_APP_ID_,
     LAST_APP_ID     = _LAST_APP_ID_
 }SBSYS_id;
 
