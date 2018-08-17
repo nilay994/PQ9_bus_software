@@ -38,13 +38,36 @@ struct fram_device {
   size_t count;
 };
 
+struct powerline_device {
+  dev_id id;
+  bool b1_enabled;
+  bool b2_enabled;
+  bool b3_enabled;
+  bool b4_enabled;
+
+  bool b1_state;
+  bool b2_state;
+  bool b3_state;
+  bool b4_state;
+};
+
+struct int_wdg_device {
+  dev_id id;
+  bool clr;
+  bool cmd;
+};
+
 void device_init();
 
 void update_device(dev_id id);
 
+void read_device_status(bool *status, uint16_t *size);
+
 void read_device_parameters(dev_id id, void * data);
 
 void write_device_parameters(dev_id id, void * data);
+
+bool set_device_parameters(dev_id id, void * data);
 
 void get_device_parameters(dev_id id, void * data);
 

@@ -3,18 +3,23 @@
 
 #include <stdint.h>
 #include "satellite.h"
+#include "PQ9_bus_engine.h"
 
-SAT_returnState queuePush_hk(pq9_pkt *pkt, SBSYS_id app_id);
+struct _queue {
+    pq9_pkt *fifo[POOL_PKT_SIZE];
+    uint8_t head;
+    uint8_t tail;
+};
 
-SAT_returnState queuePush(pq9_pkt *pkt, SBSYS_id app_id);
+bool queuePush(pq9_pkt *pkt, pool_id id);
 
-pq9_pkt * queuePop(SBSYS_id app_id);
+pq9_pkt * queuePop(pool_id id);
 
-uint8_t queueSize(SBSYS_id app_id);
+uint8_t queueSize(pool_id id);
 
-pq9_pkt * queuePeak(SBSYS_id app_id);
+pq9_pkt * queuePeak(pool_id id);
 
-void queue_IDLE(SBSYS_id app_id);
+void queue_IDLE(pool_id id);
 
 void queueInit();
 

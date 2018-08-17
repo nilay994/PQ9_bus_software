@@ -1,76 +1,72 @@
 #include "queue.h"
 
 #include "pkt_pool.h"
+#include "subsystem_pool.h"
 
-#undef __FILE_ID__
-#define __FILE_ID__ 34
+bool queuePush(pq9_pkt *pkt, pool_id id) {
 
-struct _queue {
-    pq9_pkt *fifo[POOL_PKT_SIZE];
-    uint8_t head;
-    uint8_t tail;
-};
+  struct _queue *queue = get_subsystem_queue(id);
+  if(!C_ASSERT(queue != NULL) == true) { return false; }
 
-static struct _queue queue = { .head = 0, .tail = 0};
+  if((queue->head) == ((((queue->tail) - 1) + POOL_PKT_SIZE) % POOL_PKT_SIZE)) {
+      return false;
+  }
 
-SAT_returnState queuePush_hk(pq9_pkt *pkt, SBSYS_id app_id) {
-  return queuePush(pkt, app_id);
+  queue->fifo[queue->head] = pkt;
+
+  queue->head = (queue->head + 1) % POOL_PKT_SIZE;
+
+  return true;
 }
 
-SAT_returnState queuePush(pq9_pkt *pkt, SBSYS_id app_id) {
+pq9_pkt * queuePop(pool_id id) {
 
-    if(queue.head == (((queue.tail - 1) + POOL_PKT_SIZE) % POOL_PKT_SIZE)) {
-        return SATR_ERROR;
-    }
+  struct _queue *queue = get_subsystem_queue(id);
+  if(!C_ASSERT(queue != NULL) == true) { return NULL; }
 
-    queue.fifo[queue.head] = pkt;
+  pq9_pkt *pkt;
 
-    queue.head = (queue.head + 1) % POOL_PKT_SIZE;
+  if(queue->head == queue->tail) { return 0; }
 
-    return SATR_OK;
+  pkt = queue->fifo[queue->tail];
+  queue->tail = (queue->tail + 1) % POOL_PKT_SIZE;
+
+  return pkt;
 }
 
-pq9_pkt * queuePop(SBSYS_id app_id) {
+uint8_t queueSize(pool_id id) {
 
-    pq9_pkt *pkt;
+  struct _queue *queue = get_subsystem_queue(id);
+  if(!C_ASSERT(queue != NULL) == true) { return NULL; }
 
-    if(queue.head == queue.tail) { return 0; }
+  if(queue->head == queue->tail) { return 0; }
 
-    pkt = queue.fifo[queue.tail];
-    queue.tail = (queue.tail + 1) % POOL_PKT_SIZE;
-
-    return pkt;
+  return queue->head - queue->tail;
 }
 
-uint8_t queueSize(SBSYS_id app_id) {
+pq9_pkt * queuePeak(pool_id id) {
 
-    if(queue.head == queue.tail) { return 0; }
+  struct _queue *queue = get_subsystem_queue(id);
+  if(!C_ASSERT(queue != NULL) == true) { return NULL; }
 
-    return queue.head - queue.tail;
+  if(queue->head == queue->tail) { return 0; }
+
+  return queue->fifo[queue->head];
 }
 
-pq9_pkt * queuePeak(SBSYS_id app_id) {
+void queue_IDLE(pool_id id) {
 
-    if(queue.head == queue.tail) { return 0; }
+  struct _queue *queue = get_subsystem_queue(id);
+  if(!C_ASSERT(queue != NULL) == true) { return ; }
 
-    return queue.fifo[queue.head];
-}
+  pq9_pkt *pkt;
 
-void queue_IDLE(SBSYS_id app_id) {
+  pkt = queuePeak(id);
+  if(pkt != NULL) { return; }
 
-    pq9_pkt *pkt;
+  if(is_free_pkt(pkt) == true) {
+      queuePop(id);
 
-    pkt = queuePeak(app_id);
-    if(pkt != NULL) { return; }
+  }
 
-    if(is_free_pkt(pkt) == true) {
-        queuePop(app_id);
-
-    }
-
-}
-
-void queueInit() {
-  queue.head = 0;
-  queue.tail = 0;
 }

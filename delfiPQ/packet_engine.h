@@ -19,4 +19,6 @@ void import_pkt();
 
 void export_pkt();
 
+void PQ9_master();
+
 #endif

@@ -31,12 +31,22 @@ struct fram_device {
   size_t count;
 };
 
+struct int_wdg_device {
+  dev_id id;
+  bool clr;
+  bool cmd;
+};
+
 void device_init();
 
 void update_device(const dev_id id);
 
+void read_device_status(bool *status, uint16_t *size);
+
 void read_device_parameters(dev_id id, void * data);
 
 void write_device_parameters(dev_id id, void * data);
+
+bool set_device_parameters(dev_id id, void * data);
 
 #endif

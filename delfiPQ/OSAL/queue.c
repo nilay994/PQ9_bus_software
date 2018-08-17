@@ -1,7 +1,6 @@
 #include "queue.h"
 
 #include "pkt_pool.h"
-#include "sysview.h"
 /* RTOS header files */
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Mailbox.h>
@@ -16,8 +15,8 @@ Mailbox_Struct mbxStruct;
 Mailbox_Handle mbxHandle_hk;
 Mailbox_Handle mbxHandle;
 
-struct _queue queue_hk[POOL_PKT_TOTAL_SIZE];
-struct _queue queue[POOL_PKT_TOTAL_SIZE];
+struct _queue queue_hk[POOL_PKT_SIZE];
+struct _queue queue[POOL_PKT_SIZE];
 
 void queueInit() {
 
@@ -27,7 +26,7 @@ void queueInit() {
   Mailbox_Params_init(&mbxParams);
   mbxParams.buf = (Ptr)queue_hk;
   mbxParams.bufSize = sizeof(queue_hk);
-  Mailbox_construct(&mbxStruct_hk, sizeof(size_t), POOL_PKT_TOTAL_SIZE, &mbxParams, NULL);
+  Mailbox_construct(&mbxStruct_hk, sizeof(size_t), POOL_PKT_SIZE, &mbxParams, NULL);
   mbxHandle_hk = Mailbox_handle(&mbxStruct_hk);
   if (mbxHandle_hk == NULL) {
 
@@ -37,7 +36,7 @@ void queueInit() {
   Mailbox_Params_init(&mbxParams);
   mbxParams.buf = (Ptr)queue;
   mbxParams.bufSize = sizeof(queue);
-  Mailbox_construct(&mbxStruct, sizeof(size_t), POOL_PKT_TOTAL_SIZE, &mbxParams, NULL);
+  Mailbox_construct(&mbxStruct, sizeof(size_t), POOL_PKT_SIZE, &mbxParams, NULL);
   mbxHandle = Mailbox_handle(&mbxStruct);
   if (mbxHandle == NULL) {
 
@@ -45,16 +44,7 @@ void queueInit() {
 
 }
 
-SAT_returnState queuePush_hk(pq9_pkt *pkt, SBSYS_id app_id) {
-
-    size_t temp = (size_t)pkt;
-
-    Mailbox_post(mbxHandle_hk, &temp, BIOS_NO_WAIT);
-
-    return SATR_OK;
-}
-
-SAT_returnState queuePush(pq9_pkt *pkt, SBSYS_id app_id) {
+bool queuePush(pq9_pkt *pkt, SBSYS_id app_id) {
 
     size_t temp = (size_t)pkt;
 

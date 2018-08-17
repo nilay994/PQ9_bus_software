@@ -14,6 +14,7 @@ typedef struct {
   SBSYS_id src_id;
   uint8_t type;
   uint8_t subtype;
+  uint16_t packet_counter;
   uint8_t msg[253];
   SAT_returnState verification_state;
 }pq9_pkt;
