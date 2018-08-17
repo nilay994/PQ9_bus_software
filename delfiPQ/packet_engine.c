@@ -9,44 +9,84 @@ struct _uart_data {
     uint8_t uart_tx_buf[UART_BUF_SIZE];
 } ud;
 
-void master_() {
+
+
+void PQ9_master() {
+
+    uint32_t cmd_loop;
+  uint8_t buf[4];
+  uint16_t size;
+
+  get_parameter(Master_command_loop_param_id, &cmd_loop, buf, &size);
+
+  clr_hk_storage();
 
   crt_hk_request(ADB_APP_ID);
-  usleep(1);
+  enable_PQ9_tx();
+  usleep(cmd_loop);
 
   crt_hk_request(EPS_APP_ID);
-  usleep(1);
+  enable_PQ9_tx();
+  usleep(cmd_loop);
 
   crt_hk_request(ADCS_APP_ID);
-  usleep(1);
+  enable_PQ9_tx();
+  usleep(cmd_loop);
 
   crt_hk_request(COMMS_APP_ID);
-  usleep(1);
+  enable_PQ9_tx();
+  usleep(cmd_loop);
 
-  crt_en_request(COMMS_APP_ID);
-  usleep(1);
+  // crt_housekeeping_resp(DBG_APP_ID);
+  // enable_PQ9_tx();
+  // sleep(1);
 
-  sleep(2);
+//  sleep(1);
+
+  // crt_en_request(COMMS_APP_ID);
+  // sleep(1);
+  //
+  // sleep(1);
 
   crt_housekeeping_transmit(ADB_APP_ID);
-  usleep(1);
+  usleep(cmd_loop);
 
   crt_housekeeping_transmit(EPS_APP_ID);
-  usleep(1);
+  usleep(cmd_loop);
 
   crt_housekeeping_transmit(ADCS_APP_ID);
-  usleep(1);
+  usleep(cmd_loop);
 
   crt_housekeeping_transmit(COMMS_APP_ID);
-  usleep(1);
+  usleep(cmd_loop);
 
   crt_housekeeping_transmit(OBC_APP_ID);
-  usleep(1);
+  usleep(cmd_loop);
 
-  usleep(1);
+//  sleep(1);
+
+  // crt_pstats_request(ADB_APP_ID);
+  // enable_PQ9_tx();
+  // sleep(1);
+
+  // crt_pstats_request(EPS_APP_ID);
+  // enable_PQ9_tx();
+  // sleep(1);
+
+  // crt_pstats_request(ADCS_APP_ID);
+  // enable_PQ9_tx();
+  // sleep(1);
+  //
+  // crt_pstats_request(COMMS_APP_ID);
+  // enable_PQ9_tx();
+  // sleep(1);
+
+  // crt_pstats_resp(DBG_APP_ID);
+  // enable_PQ9_tx();
+  // sleep(1);
 
   //add parameter
-  OSAL_sys_delay(5);
+  usleep(cmd_loop);
 
 }
 
