@@ -177,7 +177,7 @@ bool HAL_dep_status_sw0() {
     bool res = false;
     res = GPIO_read(DEB_STATUS0);
 
-    return res;
+    return !res;
 }
 
 bool HAL_dep_status_sw1() {
@@ -185,7 +185,7 @@ bool HAL_dep_status_sw1() {
     bool res = false;
     res = GPIO_read(DEB_STATUS1);
 
-    return res;
+    return !res;
 }
 
 bool HAL_dep_status_sw2() {
@@ -193,7 +193,7 @@ bool HAL_dep_status_sw2() {
     bool res = false;
     res = GPIO_read(DEB_STATUS2);
 
-    return res;
+    return !res;
 }
 
 bool HAL_dep_status_sw3() {
@@ -201,7 +201,7 @@ bool HAL_dep_status_sw3() {
     bool res = false;
     res = GPIO_read(DEB_STATUS3);
 
-    return res;
+    return !res;
 }
 
 
