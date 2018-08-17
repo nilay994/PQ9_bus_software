@@ -202,7 +202,10 @@ typedef enum {
     SBSYS_reset_cmd_int_wdg_param_id   =  59,
     SBSYS_reset_clr_int_wdg_param_id   =  60,
 
-    LAST_param_id                      =  61
+    SBSYS_sensor_loop_param_id         =  61,
+    Master_command_loop_param_id       =  62,
+
+    LAST_param_id                      =  63
 }param_id;
 
 typedef enum {
