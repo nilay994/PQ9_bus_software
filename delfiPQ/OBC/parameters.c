@@ -10,6 +10,8 @@ struct parameters_memory_pool {
   uint16_t testing_2;
   uint32_t testing_4;
   uint32_t testing_4_rw;
+  uint32_t sensor_loop;
+  uint32_t command_loop;
 
 }mem_pool;
 
@@ -19,6 +21,10 @@ void init_parameters() {
   mem_pool.testing_4 = 0xDEADBEEF;
 
   mem_pool.testing_4_rw = 0xDEADBEEF;
+
+  mem_pool.sensor_loop = 100000;
+  mem_pool.command_loop = 900000;
+
 }
 
 void get_parameter(param_id pid, void* value, uint8_t *buf, uint16_t *size) {
@@ -42,6 +48,16 @@ void get_parameter(param_id pid, void* value, uint8_t *buf, uint16_t *size) {
     cnv8_16LE(temp_fram_buffer, &temp_val);
     *((uint16_t*)value) = temp_val;
     *size = 2;
+
+  } else if(pid == SBSYS_sensor_loop_param_id) {
+    *((uint32_t*)value) = mem_pool.sensor_loop;
+    cnv32_8(mem_pool.sensor_loop, buf);
+    *size = 4;
+
+  } else if(pid == Master_command_loop_param_id) {
+    *((uint32_t*)value) = mem_pool.command_loop;
+    cnv32_8(mem_pool.command_loop, buf);
+    *size = 4;
 
   } else if(pid == testing_2_param_id) {
     *((uint16_t*)value) = mem_pool.testing_2;
@@ -102,6 +118,16 @@ bool set_parameter(param_id pid, void* value) {
     };
 
     write_device_parameters(OBC_FRAM_DEV_ID, &temp_fram);
+
+  } else if(pid == SBSYS_sensor_loop_param_id) {
+    uint8_t *buf;
+    buf = (uint8_t*)value;
+    cnv8_32LE(&buf[0], &mem_pool.sensor_loop );
+
+  } else if(pid == Master_command_loop_param_id) {
+    uint8_t *buf;
+    buf = (uint8_t*)value;
+    cnv8_32LE(&buf[0], &mem_pool.command_loop);
 
   } else if(pid == SBSYS_reset_clr_int_wdg_param_id) {
 

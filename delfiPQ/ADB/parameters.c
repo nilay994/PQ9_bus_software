@@ -8,12 +8,16 @@ struct parameters_memory_pool {
   uint16_t testing_2;
   uint32_t testing_4;
 
+  uint32_t sensor_loop;
+
 }mem_pool;
 
 void init_parameters() {
 
   mem_pool.testing_2 = 0xCAFE;
   mem_pool.testing_4 = 0xDEADBEEF;
+
+  mem_pool.sensor_loop = 100000;
 
 }
 
@@ -27,6 +31,11 @@ void get_parameter(param_id pid, void* value, uint8_t *buf, uint16_t *size) {
   } else if(pid == testing_4_param_id) {
     *((uint32_t*)value) = mem_pool.testing_4;
     cnv32_8(mem_pool.testing_4, buf);
+    *size = 4;
+
+  } else if(pid == SBSYS_sensor_loop_param_id) {
+    *((uint32_t*)value) = mem_pool.sensor_loop;
+    cnv32_8(mem_pool.sensor_loop, buf);
     *size = 4;
 
   } else if(pid == adb_int_temp_param_id) {
@@ -110,6 +119,11 @@ bool set_parameter(param_id pid, void* value) {
     }
 
     HAL_post_burn_event();
+
+  } else if(pid == SBSYS_sensor_loop_param_id) {
+    uint8_t *buf;
+    buf = (uint8_t*)value;
+    cnv8_32LE(&buf[0], &mem_pool.sensor_loop );
 
   } else if(pid == SBSYS_reset_clr_int_wdg_param_id) {
 
