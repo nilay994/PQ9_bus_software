@@ -59,6 +59,7 @@ void copy_stats(uint8_t *buf, uint16_t *pkt_size) {
 
 
 void crt_pstats_request(SBSYS_id dest_id) {
+<<<<<<< HEAD
   pq9_pkt *resp_pkt;
 
   resp_pkt = get_pkt(0);
@@ -73,6 +74,12 @@ void crt_pstats_request(SBSYS_id dest_id) {
 }
 
 void crt_pstats_resp(SBSYS_id dest_id) {
+=======
+
+}
+
+void crt_pstats_resp(pq9_pkt *pkt) {
+>>>>>>> a820ba08c51fe54ef7ae36cfdf5c8225035ff802
   pq9_pkt *resp_pkt;
 
   resp_pkt = get_pkt(0);
@@ -84,13 +91,21 @@ void crt_pstats_resp(SBSYS_id dest_id) {
 
   copy_stats(resp_pkt->msg, &size);
 
+<<<<<<< HEAD
   crt_pkt(resp_pkt, dest_id, TC_STATS_TYPE, TM_STATS_RESP_SUBTYPE, size);
+=======
+  crt_pkt(resp_pkt, pkt->src_id, TC_STATS_TYPE, TM_STATS_RESP_SUBTYPE, size);
+>>>>>>> a820ba08c51fe54ef7ae36cfdf5c8225035ff802
   queuePush(resp_pkt, RS_POOL_ID);
 }
 
 void pstats_app(pq9_pkt *pkt) {
   if(pkt->subtype == TC_STATS_REQ_SUBTYPE) {
+<<<<<<< HEAD
     crt_pstats_resp(pkt->src_id);
+=======
+    crt_pstats_resp(pkt);
+>>>>>>> a820ba08c51fe54ef7ae36cfdf5c8225035ff802
   }
 }
 
