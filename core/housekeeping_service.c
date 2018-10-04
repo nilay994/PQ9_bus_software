@@ -39,7 +39,7 @@ void crt_housekeeping_transmit(SBSYS_id id) {
     return ;
   }
 
-  uint8_t size = 0;
+  uint16_t size = 0;
 
   retrieve_housekeeping(id, resp_pkt->msg, &size);
 
