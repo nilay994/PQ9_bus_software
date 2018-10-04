@@ -387,8 +387,8 @@ void get_parameter(param_id pid, void* value, uint8_t *buf, uint16_t *size) {
 
       read_device_parameters(BATT_CHARGE_DEV_ID, &ltc_dev);
 
-      *((uint16_t*)value) = ltc_dev.raw_temp;
-      cnv16_8(ltc_dev.raw_temp, buf);
+      *((uint16_t*)value) = ltc_dev.raw_volt;
+      cnv16_8(ltc_dev.raw_volt, buf);
       *size = 2;
 
   } else if(pid == batt_temp_param_id) {
@@ -396,8 +396,8 @@ void get_parameter(param_id pid, void* value, uint8_t *buf, uint16_t *size) {
 
       read_device_parameters(BATT_CHARGE_DEV_ID, &ltc_dev);
 
-      *((uint16_t*)value) = ltc_dev.raw_volt;
-      cnv16_8(ltc_dev.raw_volt, buf);
+      *((uint16_t*)value) = ltc_dev.raw_temp;
+      cnv16_8(ltc_dev.raw_temp, buf);
       *size = 2;
 
   } else if(pid == batt_capacity_param_id) {
