@@ -122,9 +122,9 @@ void HAL_PQ9_BUS_enable_tx() {
 
   GPIO_write(PQ9_EN, 1);
 
-  if(!C_ASSERT(Timer_start(tim_pq9_bus_tx_en) != Timer_STATUS_ERROR) == true) {
+  //if(!C_ASSERT(Timer_start(tim_pq9_bus_tx_en) != Timer_STATUS_ERROR) == true) {
 
-  }
+  //}
 
 }
 
@@ -132,19 +132,24 @@ void HAL_PQ9_BUS_disable_tx() {
 
   GPIO_write(PQ9_EN, 0);
 
-  Timer_stop(tim_pq9_bus_tx_en);
+  //Timer_stop(tim_pq9_bus_tx_en);
 
 }
 
 /*
  *  ======== Modified readIsrBinaryCallback ========
  *  1. Add to ti/drivers/uart/UARTMSP432.c this function
- *  2. add function definition
- *  4. Modify UARTMSP432.c, the staticFxnTable() and
+ *  2. add function readIsrModBinaryCallback definition in the .h
+ *  3. Modify UARTMSP432.c, the staticFxnTable() and
  *     replace readIsrBinaryCallback with
  *     readIsrModBinaryCallback
+    4. Add the other code
+ *  5. Modify function UART_writePolling
+ *  6. Modify function initHw
+ *  7. Rebuild the using gmake eg /Applications/ti/xdctools_3_50_05_12_core/gmake
  */
 
+ // Step 6 Find in the function the first and last loc and add the between them
  // static void initHw(UARTMSP432_Object *object,
  //    UARTMSP432_HWAttrsV1 const *hwAttrs, uint32_t inputClkFreq)
  //
@@ -157,6 +162,7 @@ void HAL_PQ9_BUS_disable_tx() {
  //
  //     uartConfig.overSampling = hwAttrs->baudrateLUT[baudrateIndex].oversampling;
 
+// Step 4 just copy that
 // uint8_t pq_rx_buf[300];
 // uint16_t pq_rx_count, pq_size;
 // bool pq_rx_flag;
@@ -259,6 +265,8 @@ void HAL_PQ9_BUS_disable_tx() {
 //    return (ret);
 // }
 
+
+// Step 5 Replace that function.
 // /*
 //  *  ======== UARTMSP432_writePolling ========
 //  */
