@@ -37,7 +37,7 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 
-cmd = "git clone https://github.com/nchronas/PQ9PQ9_bus_software.git"
+cmd = "git clone https://github.com/nchronas/PQ9_bus_software.git"
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
