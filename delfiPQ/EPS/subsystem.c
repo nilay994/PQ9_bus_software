@@ -16,8 +16,8 @@ void route_pkt(pq9_pkt *pkt) {
     function_management_app(pkt);
   } else if(pkt->type == TC_STATS_TYPE) {
     pstats_app(pkt);
-  } else if(pkt->type == TC_FREEZE_TYPE) {
-    freeze();
+  } else if(pkt->type == TC_TESTING_TYPE) {
+    testing_fn(pkt->subtype);
   }
 
 }

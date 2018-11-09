@@ -3,6 +3,7 @@
 #include "PQ9_bus_engine.h"
 #include "hal_functions.h"
 #include "packet_stats.h"
+#include "testing.h"
 
 struct _uart_data {
     uint8_t uart_rx_buf[UART_BUF_SIZE];
@@ -10,12 +11,19 @@ struct _uart_data {
 } ud;
 
 
+extern bool master_loop_flag;
 
 void PQ9_master() {
 
   uint32_t cmd_loop;
   uint8_t buf[4];
   uint16_t size;
+
+#ifdef DEBUG
+  if(!master_loop_flag) {
+    return;
+  }
+#endif
 
   get_parameter(Master_command_loop_param_id, &cmd_loop, buf, &size);
 

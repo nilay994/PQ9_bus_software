@@ -24,7 +24,7 @@
 #define TC_EN_TYPE    5
 #define TC_STATS_TYPE 6
 #define TC_PING_TYPE 17
-#define TC_FREEZE_TYPE 21
+#define TC_TESTING_TYPE 21
 
 #define TC_FM_GET_PARAMETER_SUBTYPE   1
 #define TM_FM_PARAMETER_RESP_SUBTYPE  2
@@ -40,6 +40,10 @@
 #define TC_EN_REQ_SUBTYPE    1
 #define TM_EN_RESP_SUBTYPE   2
 #define TM_EN_EMPTY_SUBTYPE  5
+
+#define TC_TST_FREEZE    6
+#define TC_TST_STARTM    7
+#define TC_TST_STOPM     8
 
 #define TC_STATS_REQ_SUBTYPE    1
 #define TM_STATS_RESP_SUBTYPE   2
