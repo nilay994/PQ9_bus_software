@@ -154,6 +154,14 @@ void update_device(dev_id id) {
         int_temp_dev[0].raw_temp = val;
     }
 
+  }  else if(id == BATT_CHARGE_DEV_ID) {
+
+    bool r1 = ltc_code_to_voltage(id, &ltc_dev.raw_volt);
+    bool r2 = ltc_temp(id, &ltc_dev.raw_temp);
+    bool r3 = ltc_capacity(id, &ltc_dev.raw_cap);
+
+    ltc_status[0] = r1 & r2 & r3;
+
   }
 
   OSAL_device_post();

@@ -3,6 +3,7 @@
 #include "PQ9_bus_engine.h"
 #include "hal_functions.h"
 #include "packet_stats.h"
+#include "testing.h"
 
 struct _uart_data {
     uint8_t uart_rx_buf[UART_BUF_SIZE];
@@ -10,12 +11,19 @@ struct _uart_data {
 } ud;
 
 
+extern bool master_loop_flag;
 
 void PQ9_master() {
 
-    uint32_t cmd_loop;
+  uint32_t cmd_loop;
   uint8_t buf[4];
   uint16_t size;
+
+#ifdef DEBUG
+  if(!master_loop_flag) {
+    return;
+  }
+#endif
 
   get_parameter(Master_command_loop_param_id, &cmd_loop, buf, &size);
 
@@ -37,9 +45,27 @@ void PQ9_master() {
   enable_PQ9_tx();
   usleep(cmd_loop);
 
-  // crt_housekeeping_resp(DBG_APP_ID);
-  // enable_PQ9_tx();
-  // sleep(1);
+  crt_housekeeping_transmit(ADB_APP_ID);
+  enable_PQ9_tx();
+  usleep(cmd_loop);
+
+  crt_housekeeping_transmit(EPS_APP_ID);
+  enable_PQ9_tx();
+  usleep(cmd_loop);
+
+  crt_housekeeping_transmit(ADCS_APP_ID);
+  enable_PQ9_tx();
+  usleep(cmd_loop);
+
+  crt_housekeeping_transmit(COMMS_APP_ID);
+  enable_PQ9_tx();
+  usleep(cmd_loop);
+
+  crt_housekeeping_transmit(OBC_APP_ID);
+  enable_PQ9_tx();
+  usleep(cmd_loop);
+
+  sleep(10);
 
 //  sleep(1);
 
@@ -48,20 +74,7 @@ void PQ9_master() {
   //
   // sleep(1);
 
-  crt_housekeeping_transmit(ADB_APP_ID);
-  usleep(cmd_loop);
 
-  crt_housekeeping_transmit(EPS_APP_ID);
-  usleep(cmd_loop);
-
-  crt_housekeeping_transmit(ADCS_APP_ID);
-  usleep(cmd_loop);
-
-  crt_housekeeping_transmit(COMMS_APP_ID);
-  usleep(cmd_loop);
-
-  crt_housekeeping_transmit(OBC_APP_ID);
-  usleep(cmd_loop);
 
 //  sleep(1);
 
@@ -139,13 +152,17 @@ void export_pkt() {
       return ;
     }
 
+    PQ9_tx();
+
     bool res = pack_PQ9_BUS(pkt, ud.uart_tx_buf, &size);
     if(res == false) {
+      disable_PQ9_tx();
       free_pkt(pkt);
       return ;
     }
 
     if(!C_ASSERT(size > 0) == true) {
+      disable_PQ9_tx();
       free_pkt(pkt);
       return ;
     }

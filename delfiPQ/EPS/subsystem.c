@@ -4,6 +4,7 @@
 #include "housekeeping_service.h"
 #include "function_management_service.h"
 #include "packet_stats.h"
+#include "testing.h"
 
 void route_pkt(pq9_pkt *pkt) {
 
@@ -15,6 +16,8 @@ void route_pkt(pq9_pkt *pkt) {
     function_management_app(pkt);
   } else if(pkt->type == TC_STATS_TYPE) {
     pstats_app(pkt);
+  } else if(pkt->type == TC_TESTING_TYPE) {
+    testing_fn(pkt->subtype);
   }
 
 }

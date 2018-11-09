@@ -84,7 +84,7 @@ void HAL_peripheral_open() {
   uartParams.readDataMode = UART_DATA_BINARY;
   uartParams.readReturnMode = UART_RETURN_FULL;
   uartParams.readEcho = UART_ECHO_OFF;
-  uartParams.baudRate = 500000;
+  uartParams.baudRate = 115200; //500000;
   uartParams.readCallback = &temp;
   uart_pq9_bus = UART_open(PQ9, &uartParams);
 
@@ -102,7 +102,7 @@ void HAL_peripheral_open() {
   uartParams.readDataMode = UART_DATA_BINARY;
   uartParams.readReturnMode = UART_RETURN_FULL;
   uartParams.readEcho = UART_ECHO_ON;
-  uartParams.baudRate = 9600;
+  uartParams.baudRate = 115200;
   uart_dbg_bus = UART_open(DBG, &uartParams);
 
   I2C_Params_init(&i2cParams);

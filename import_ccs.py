@@ -37,7 +37,7 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 
-cmd = "git clone https://github.com/nchronas/PQ9PQ9_bus_software.git"
+cmd = "git clone https://github.com/nchronas/PQ9_bus_software.git"
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
@@ -318,6 +318,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+f = pq9_path + "core/testing.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
 folder = "ADB_software/libs/"
 
 f = path + "TMP100/TMP100.c"
@@ -472,6 +477,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "core/queue.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "core/testing.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
@@ -651,6 +661,11 @@ cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
+f = pq9_path + "core/testing.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
 
 folder = "OBC_software/libs/"
 f = path + "TMP100/TMP100.c"
@@ -805,6 +820,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "core/queue.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "core/testing.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
@@ -974,6 +994,11 @@ pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()
 
 f = pq9_path + "core/queue.c"
+cmd = "ln -s " + f + " " + folder
+pipe = subprocess.Popen(cmd, shell=True)
+pipe.wait()
+
+f = pq9_path + "core/testing.c"
 cmd = "ln -s " + f + " " + folder
 pipe = subprocess.Popen(cmd, shell=True)
 pipe.wait()

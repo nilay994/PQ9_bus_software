@@ -25,6 +25,8 @@ void disable_PQ9_tx();
 
 void enable_PQ9_tx();
 
+void PQ9_tx();
+
 bool unpack_PQ9_BUS(const uint8_t *buf,
                     const uint16_t size,
                     pq9_pkt *pq_pkt);
